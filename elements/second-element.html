@@ -13,6 +13,15 @@
     <form-input value='{{name}}' type='input' idValue='name' label='their name'></form-input>
     <form-input value='{{color}}' type='input' idValue='color' label='their color'></form-input>
 
+    <p>{{name}}
+      <template if='{{age > 20}}'>
+        can drink.
+      </template>
+      <template if='{{age < 21}}'>
+        cannot drink.
+      </template>
+    </p>
+
   </template>
 
     <div>
