@@ -1,0 +1,25 @@
+{
+  "name": "jordpo.github.io",
+  "version": "1.0.0",
+  "description": "github user page",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jordpo/jordpo.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jordpo/jordpo.github.io/issues"
+  },
+  "homepage": "https://github.com/jordpo/jordpo.github.io",
+  "devDependencies": {
+    "gulp": "^3.8.5",
+    "gulp-less": "^1.3.1",
+    "browser-sync": "^1.1.2",
+    "gulp-autoprefixer": "0.0.7"
+  }
+}
