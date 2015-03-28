@@ -1,0 +1,22 @@
+<link rel="import" href="../elements.html">
+
+<polymer-element name="first-element" attributes='owner color'>
+  <template>
+    <p>I'm <b>first-element</b>. This is my Shadow DOM.</p>
+
+    <span id='el'>Not ready...</span>
+
+    <p style="color: {{color}}">{{owner}} is playing around with Data binding</p>
+  </template>
+
+  <script>
+    Polymer({
+      owner: "Jordpo",
+      color: 'tomato',
+      ready: function() {
+        this.$.el.textContent = this.owner +
+                                " is ready!";
+      }
+    });
+  </script>
+</polymer-element>

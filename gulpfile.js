@@ -57,7 +57,7 @@ gulp.task('less', function () {
  */
 gulp.task('watch', function () {
     gulp.watch('_less/*.less', ['less']);
-    gulp.watch(['index.html', 'js/*', '_layouts/*.html', '_posts/*','customers/*','blog/*','team/*','quote/*','events/*','products/*','services/*',], ['jekyll-rebuild']);
+    gulp.watch(['index.html', 'elements.html', 'elements/*', 'js/*', '_layouts/*.html', '_posts/*','customers/*','blog/*','team/*','quote/*','events/*','products/*','services/*',], ['jekyll-rebuild']);
 });
 
 /**

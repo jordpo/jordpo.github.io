@@ -1,0 +1,41 @@
+<link rel='import' href='../elements.html'>
+
+<polymer-element name='second-element'>
+<template>
+
+  <template bind='{{person}}'>
+    This is <b>{{owner}}</b>'s age slider. <br>
+    He likes the color: <span style='color: {{color}}'>{{color}}</span>.<br>
+    Woah. {{name}} is {{age}} years old.<br>
+    Change my settings below.<br>
+
+    <form-input value='{{age}}' type='range' idValue='age' label='their age'></form-input>
+    <form-input value='{{name}}' type='input' idValue='name' label='their name'></form-input>
+    <form-input value='{{color}}' type='input' idValue='color' label='their color'></form-input>
+
+  </template>
+
+    <div>
+      <content />
+    </div>
+
+</template>
+
+  <script>
+    Polymer('second-element', {
+      person: {
+        age: 25,
+        name: "Daniel",
+        color: "red",
+        owner: "Eric",
+      },
+     nameChanged: function() {
+        if (this.name) {
+          // Ensure name is capitalized
+          this.name = this.name[0].toUpperCase() +
+                      this.name.slice(1);
+        }
+      }
+    });
+  </script>
+</polymer-element>
