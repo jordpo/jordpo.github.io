@@ -1,0 +1,71 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="team-member.html">
+<link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
+
+<polymer-element name='team-members'>
+  <template>
+    <style>
+      .profile {
+        position: absolute;
+        width: 80%;
+        background-color: aliceblue;
+      }
+
+      .img-shell {
+        display: inline-block;
+        width: 20%;
+        padding: 20px;
+      }
+
+      .img-shell img {
+        width: 100%;
+      }
+
+      section {
+        height: 500px;
+      }
+
+    </style>
+    <core-animated-pages selected="{{ page }}" transitions="hero-transition cross-fade">
+    <section>
+    <template repeat="{{team as person}}">
+      <team-member hero-id="{{person.name}}" on-tap="{{shout}}" person="{{person}}" hero></team-member>
+    </template>
+    </section>
+    <section>
+      <div horizontal center-justified layout hero-id="{{selectedPerson.name}}" hero on-tap="{{quiet}}">
+        <div class='img-shell'>
+          <img src="../assets/team/{{selectedPerson.image}}" alt="{{selectedPerson.name}}">
+        </div>
+        <div>
+          <h1>{{selectedPerson.name}}</h1>
+          <p>{{selectedPerson.profile}}</p>
+        </div>
+      </div>
+    </section>
+    </core-animated-pages>
+  </template>
+  <script>
+    Polymer({
+      page: 0,
+      team: [
+        {name: 'Adam Bouchard', image: 'adam.jpg', profile: 'Awesome yeah awesome.'},
+        {name: 'Peter Brown', image: 'pete.jpg', profile: 'Awesome yeah awesome.'},
+        {name: 'Patrick Berkeley', image: 'patrick.jpg', profile: 'Awesome yeah awesome.'},
+        {name: 'Alan Peabody', image: 'alan.jpg', profile: 'Awesome yeah awesome.'},
+        {name: 'Jordan Morano', image: 'jordan.jpg', profile: 'Awesome yeah awesome.'},
+        {name: 'Brendan Fay', image: 'brendan.jpg', profile: 'Awesome yeah awesome.'},
+        {name: 'Michael Westbom', image: 'michael.jpg', profile: 'Awesome yeah awesome.'},
+        {name: 'Jeff Henderson', image: 'michael.jpg', profile: 'Awesome yeah awesome.'},
+      ],
+      shout: function(e) {
+        var person = e.target.templateInstance.model.person;
+        this.selectedPerson = person;
+        this.page = 1;
+      },
+      quiet: function() {
+        this.page = 0;
+      }
+    });
+  </script>
+</polymer-element>

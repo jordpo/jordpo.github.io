@@ -6732,3 +6732,87 @@ button.close {
     display: none !important;
   }
 }
+.polyfill-c--team-member {
+  color: aliceblue;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -moz-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  height: 180px;
+  width: 250px;
+  position: relative;
+  margin: -4px;
+}
+.polyfill-c--team-member.adam-bouchard {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/adam.jpg');
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
+  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+.polyfill-c--team-member.peter-brown {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/pete.jpg');
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/pete.jpg');
+  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/pete.jpg');
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/pete.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/pete.jpg');
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+.polyfill-c--team-member.patrick-berkeley {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/patrick.jpg');
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/patrick.jpg');
+  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/patrick.jpg');
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/patrick.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/patrick.jpg');
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+.polyfill-c--team-member.alan-peabody {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/alan.jpg');
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/alan.jpg');
+  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/alan.jpg');
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/alan.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/alan.jpg');
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+.polyfill-c--team-member.jordan-morano {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/jordan.jpg');
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/jordan.jpg');
+  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/jordan.jpg');
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/jordan.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/jordan.jpg');
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+.polyfill-c--team-member.brendan-fay {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/brendan.jpg');
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/brendan.jpg');
+  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/brendan.jpg');
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/brendan.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/brendan.jpg');
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+.polyfill-c--team-member.michael-westbom {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/michael.jpg');
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/michael.jpg');
+  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/michael.jpg');
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/michael.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/michael.jpg');
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+.polyfill-c--team-member.jeff-henderson {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/adam.jpg');
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
+  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}

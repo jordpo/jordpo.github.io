@@ -1,2 +1,57 @@
 // Bootstrap
 @import 'bower_components/bootstrap/less/bootstrap.less';
+
+// mixin to be used for the team members section
+.GrayImageBackground(@path) {
+
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.4)
+  ), url(@path);
+
+  // not supported on IE
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+// end of mixin
+
+.polyfill-c--team-member {
+  color: aliceblue;
+  display: inline-flex;
+  height: 180px;
+  width: 250px;
+  position: relative;
+  margin: -4px;
+
+  &.adam-bouchard {
+    .GrayImageBackground('../../assets/team/adam.jpg');
+  }
+
+  &.peter-brown {
+    .GrayImageBackground('../../assets/team/pete.jpg');
+  }
+
+  &.patrick-berkeley {
+    .GrayImageBackground('../../assets/team/patrick.jpg');
+  }
+
+  &.alan-peabody {
+    .GrayImageBackground('../../assets/team/alan.jpg');
+  }
+
+  &.jordan-morano {
+    .GrayImageBackground('../../assets/team/jordan.jpg');
+  }
+
+  &.brendan-fay {
+    .GrayImageBackground('../../assets/team/brendan.jpg');
+  }
+
+  &.michael-westbom {
+    .GrayImageBackground('../../assets/team/michael.jpg');
+  }
+
+  &.jeff-henderson {
+    .GrayImageBackground('../../assets/team/adam.jpg');
+  }
+}

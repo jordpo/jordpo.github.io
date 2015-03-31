@@ -1,0 +1,50 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name='team-member' attributes="person" on-tap={{click}}>
+  <template>
+    <style>
+      :host {
+        background-color: gray;
+        display: inline-flex;
+        height: 180px;
+        width: 250px;
+        position: relative;
+        margin: -4px;
+        filter: grayscale(100%);
+        -webkit-filter: grayscale(100%);
+        background-repeat: no-repeat;
+        background-position: center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        color: white;
+      }
+
+      .l--main--team-name {
+        position: absolute;
+        bottom: 0;
+        text-align: center;
+        width: 100%;
+      }
+
+      :host(:hover) {
+        cursor: pointer;
+      }
+    </style>
+
+    <p class='l--main--team-name'>{{person.name}}</p>
+  </template>
+  <script>
+    Polymer({
+      person: {},
+      ready: function() {
+        if (this.person.image) {
+        this.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4))," +
+          "url(../assets/team/" + this.person.image + ")";
+        }
+
+      }
+    });
+  </script>
+</polymer-element>
