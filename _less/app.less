@@ -1,57 +1,55 @@
 // Bootstrap
 @import 'bower_components/bootstrap/less/bootstrap.less';
 
-// mixin to be used for the team members section
-.GrayImageBackground(@path) {
-
-  background-image: linear-gradient(
-    rgba(0, 0, 0, 0.1),
-    rgba(0, 0, 0, 0.4)
-  ), url(@path);
-
-  // not supported on IE
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+body {
+	width: 1100px;
+	font-family: 'Averia Sans Libre', cursive;
 }
-// end of mixin
 
-.polyfill-c--team-member {
-  color: aliceblue;
-  display: inline-flex;
-  height: 180px;
-  width: 250px;
-  position: relative;
-  margin: -4px;
+.top-img {
+	width: 300px;
+	margin-left: 10px;
+	margin-top: 20px;
+	border: 1px solid tomato;
+}
 
-  &.adam-bouchard {
-    .GrayImageBackground('../../assets/team/adam.jpg');
-  }
+.btn {
+	background-color: tomato;
+	color: white;
+	margin: 5px;
+}
 
-  &.peter-brown {
-    .GrayImageBackground('../../assets/team/pete.jpg');
-  }
+.move-up {
+	margin-top: -150px;
+}
 
-  &.patrick-berkeley {
-    .GrayImageBackground('../../assets/team/patrick.jpg');
-  }
 
-  &.alan-peabody {
-    .GrayImageBackground('../../assets/team/alan.jpg');
-  }
+.project-field {
+	font-weight: bold;
+}
 
-  &.jordan-morano {
-    .GrayImageBackground('../../assets/team/jordan.jpg');
-  }
+.reach-out-list{
+	list-style: none;
+	display: inline;
+	padding: 0;
+}
 
-  &.brendan-fay {
-    .GrayImageBackground('../../assets/team/brendan.jpg');
-  }
+h1, h2, h3 {
+	text-align: center;
+}
 
-  &.michael-westbom {
-    .GrayImageBackground('../../assets/team/michael.jpg');
-  }
+@media (max-width: 990px){
+	.move-up {
+		margin-top: 0;
+	}
+	body {
+		width: 100%;
+		font-family: 'Averia Sans Libre', cursive;
+	}
 
-  &.jeff-henderson {
-    .GrayImageBackground('../../assets/team/adam.jpg');
-  }
+	.top-img {
+		width: 100%;
+		margin: 0;
+		border: 1px solid tomato;
+	}
 }

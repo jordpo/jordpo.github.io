@@ -6732,87 +6732,48 @@ button.close {
     display: none !important;
   }
 }
-.polyfill-c--team-member {
-  color: aliceblue;
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -moz-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  height: 180px;
-  width: 250px;
-  position: relative;
-  margin: -4px;
+body {
+  width: 1100px;
+  font-family: 'Averia Sans Libre', cursive;
 }
-.polyfill-c--team-member.adam-bouchard {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/adam.jpg');
-  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
-  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
-  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+.top-img {
+  width: 300px;
+  margin-left: 10px;
+  margin-top: 20px;
+  border: 1px solid tomato;
 }
-.polyfill-c--team-member.peter-brown {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/pete.jpg');
-  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/pete.jpg');
-  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/pete.jpg');
-  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/pete.jpg');
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/pete.jpg');
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+.btn {
+  background-color: tomato;
+  color: white;
+  margin: 5px;
 }
-.polyfill-c--team-member.patrick-berkeley {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/patrick.jpg');
-  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/patrick.jpg');
-  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/patrick.jpg');
-  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/patrick.jpg');
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/patrick.jpg');
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+.move-up {
+  margin-top: -150px;
 }
-.polyfill-c--team-member.alan-peabody {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/alan.jpg');
-  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/alan.jpg');
-  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/alan.jpg');
-  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/alan.jpg');
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/alan.jpg');
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+.project-field {
+  font-weight: bold;
 }
-.polyfill-c--team-member.jordan-morano {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/jordan.jpg');
-  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/jordan.jpg');
-  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/jordan.jpg');
-  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/jordan.jpg');
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/jordan.jpg');
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+.reach-out-list {
+  list-style: none;
+  display: inline;
+  padding: 0;
 }
-.polyfill-c--team-member.brendan-fay {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/brendan.jpg');
-  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/brendan.jpg');
-  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/brendan.jpg');
-  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/brendan.jpg');
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/brendan.jpg');
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+h1,
+h2,
+h3 {
+  text-align: center;
 }
-.polyfill-c--team-member.michael-westbom {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/michael.jpg');
-  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/michael.jpg');
-  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/michael.jpg');
-  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/michael.jpg');
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/michael.jpg');
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
-}
-.polyfill-c--team-member.jeff-henderson {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.4))), url('../../assets/team/adam.jpg');
-  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
-  background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
-  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url('../../assets/team/adam.jpg');
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
+@media (max-width: 990px) {
+  .move-up {
+    margin-top: 0;
+  }
+  body {
+    width: 100%;
+    font-family: 'Averia Sans Libre', cursive;
+  }
+  .top-img {
+    width: 100%;
+    margin: 0;
+    border: 1px solid tomato;
+  }
 }
