@@ -10,6 +10,7 @@
             <a href="#leadership" class="nav-link">Leadership</a>
             <a href="#experience" class="nav-link">Experience</a>
             <a href="#projects" class="nav-link">Projects</a>
+            <a href="#recommendations" class="nav-link">Recommendations</a>
             <a href="#contact" class="nav-link">Contact</a>
           </div>
         </div>
@@ -225,6 +226,17 @@
       </div>
     </section>
 
+    <!-- Recommendations Section -->
+    <section id="recommendations" class="py-16 bg-white">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="section-heading">Recommendations</h2>
+        <p class="text-gray-600 mb-8 text-center max-w-2xl mx-auto">
+          Testimonials from colleagues, teammates, and collaborators I've had the pleasure of working with.
+        </p>
+        <RecommendationsSection @openForm="showRecommendationForm = true" />
+      </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="bg-white py-16">
       <div class="max-w-5xl mx-auto px-6 text-center">
@@ -247,13 +259,24 @@
         <p class="mt-2">Burlington Area, Vermont · {{ new Date().getFullYear() }}</p>
       </div>
     </footer>
+
+    <!-- Recommendation Form Modal -->
+    <RecommendationForm
+      :isOpen="showRecommendationForm"
+      @close="showRecommendationForm = false"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import SkillsFilter from './components/SkillsFilter.vue'
 import ExperienceCard from './components/ExperienceCard.vue'
 import ProjectShowcase from './components/ProjectShowcase.vue'
+import RecommendationsSection from './components/RecommendationsSection.vue'
+import RecommendationForm from './components/RecommendationForm.vue'
+
+const showRecommendationForm = ref(false)
 
 interface Achievement {
   title: string

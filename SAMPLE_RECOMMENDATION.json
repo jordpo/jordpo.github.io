@@ -1,0 +1,16 @@
+{
+  "name": "Example Colleague",
+  "title": "Senior Software Engineer",
+  "company": "Tech Company",
+  "relationship": "Colleague at PowerAuctions",
+  "githubUsername": "exampleuser",
+  "skillRecommendations": [
+    "TypeScript",
+    "React",
+    "Frontend Architecture",
+    "Mentorship",
+    "Performance Optimization"
+  ],
+  "testimonial": "Jordan is an exceptional engineer who consistently delivers high-quality work. Their expertise in frontend architecture and performance optimization has been invaluable to our team. Beyond technical skills, Jordan is an excellent mentor who takes time to help others grow. I highly recommend working with Jordan on any challenging project.",
+  "date": "2025-10-17"
+}
