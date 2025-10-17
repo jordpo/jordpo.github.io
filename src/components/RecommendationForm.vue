@@ -288,21 +288,27 @@ async function handlePhotoUpload(event: Event) {
 
   if (!file) return
 
-  // File size limits
-  const MAX_SIZE = 500 * 1024 // 500KB max recommended
-  const WARN_SIZE = 200 * 1024 // 200KB warning threshold
+  // File size limits (stored in GitHub Releases, no strict limit)
+  const MAX_SIZE = 1024 * 1024 // 1MB max for reasonable upload
+  const WARN_SIZE = 500 * 1024 // 500KB warning threshold
 
   // Check file size
   if (file.size > MAX_SIZE) {
-    error.value = `Photo is too large (${(file.size / 1024).toFixed(0)}KB). Maximum size is 500KB. Please resize or compress your image.`
+    error.value = `Photo is too large (${(file.size / 1024).toFixed(0)}KB). Maximum size is 1MB. Please resize or compress your image.`
     target.value = ''
     photoPreview.value = null
     return
   }
 
-  // Warning for larger files
+  // Warning for larger files (suggest compression for better performance)
   if (file.size > WARN_SIZE) {
-    error.value = `Photo size: ${(file.size / 1024).toFixed(0)}KB. Larger images (>200KB) will be added as comments instead of inline.`
+    error.value = `Photo size: ${(file.size / 1024).toFixed(0)}KB. Consider compressing for faster loading. Your photo will be stored in GitHub Releases.`
+    // Clear warning after 4 seconds
+    setTimeout(() => {
+      if (error.value.includes('Consider compressing')) {
+        error.value = ''
+      }
+    }, 4000)
   } else {
     error.value = ''
   }

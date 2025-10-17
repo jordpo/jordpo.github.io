@@ -86,21 +86,103 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
 
     issueBody += `\n\n### Testimonial\n\n${data.testimonial}`
 
-    // Handle photo based on size
-    let photoToComment = false
+    // Upload photo to GitHub Releases if provided
+    let photoUrl = ''
     if (data.photo && data.photoFileName) {
-      // Estimate base64 size (rough calculation: base64 is ~1.33x original size)
-      const estimatedSize = data.photo.length * 0.75 // Reverse calculation
-      const SIZE_THRESHOLD = 50 * 1024 // 50KB threshold for inline vs comment
+      console.log(`Uploading photo to GitHub Releases: ${data.photoFileName}`)
 
-      if (estimatedSize > SIZE_THRESHOLD) {
-        // Large photo - will be added as comment
-        issueBody += `\n\n### Profile Photo\n\n✅ Photo uploaded: \`${data.photoFileName}\` (${(estimatedSize / 1024).toFixed(0)}KB)`
-        issueBody += `\n\n_Note: Photo data will be attached as a comment to avoid issue size limits._`
-        photoToComment = true
-      } else {
-        // Small photo - include inline
-        issueBody += `\n\n### Profile Photo\n\nFilename: \`${data.photoFileName}\`\n\n<details>\n<summary>Base64 Photo Data (click to expand)</summary>\n\n\`\`\`\n${data.photo}\n\`\`\`\n\n</details>`
+      try {
+        // Convert base64 to buffer
+        const base64Data = data.photo.replace(/^data:image\/\w+;base64,/, '')
+        const buffer = Buffer.from(base64Data, 'base64')
+
+        // Create a unique filename with timestamp
+        const timestamp = Date.now()
+        const ext = data.photoFileName.split('.').pop() || 'jpg'
+        const uploadFilename = `recommendation-photo-${timestamp}.${ext}`
+
+        // Upload to GitHub Release
+        // First, ensure the release exists (we'll use a "recommendations-photos" release)
+        const releaseTag = 'recommendations-photos'
+        let releaseId: number
+
+        // Try to get existing release
+        const getReleaseResponse = await fetch(
+          `https://api.github.com/repos/jordpo/jordpo.github.io/releases/tags/${releaseTag}`,
+          {
+            headers: {
+              'Accept': 'application/vnd.github.v3+json',
+              'Authorization': `token ${githubToken}`,
+              'User-Agent': 'Netlify-Function'
+            }
+          }
+        )
+
+        if (getReleaseResponse.ok) {
+          const releaseData = await getReleaseResponse.json()
+          releaseId = releaseData.id
+        } else {
+          // Create the release if it doesn't exist
+          const createReleaseResponse = await fetch(
+            'https://api.github.com/repos/jordpo/jordpo.github.io/releases',
+            {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/vnd.github.v3+json',
+                'Authorization': `token ${githubToken}`,
+                'Content-Type': 'application/json',
+                'User-Agent': 'Netlify-Function'
+              },
+              body: JSON.stringify({
+                tag_name: releaseTag,
+                name: 'Recommendation Photos',
+                body: 'Storage for recommendation profile photos',
+                draft: false,
+                prerelease: false
+              })
+            }
+          )
+
+          if (!createReleaseResponse.ok) {
+            throw new Error('Failed to create release for photo storage')
+          }
+
+          const newRelease = await createReleaseResponse.json()
+          releaseId = newRelease.id
+        }
+
+        // Upload the asset
+        const uploadResponse = await fetch(
+          `https://uploads.github.com/repos/jordpo/jordpo.github.io/releases/${releaseId}/assets?name=${uploadFilename}`,
+          {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/vnd.github.v3+json',
+              'Authorization': `token ${githubToken}`,
+              'Content-Type': 'application/octet-stream',
+              'User-Agent': 'Netlify-Function'
+            },
+            body: buffer
+          }
+        )
+
+        if (!uploadResponse.ok) {
+          const errorData = await uploadResponse.json()
+          console.error('Failed to upload photo:', errorData)
+          throw new Error('Failed to upload photo to GitHub')
+        }
+
+        const asset = await uploadResponse.json()
+        photoUrl = asset.browser_download_url
+
+        console.log(`Photo uploaded successfully: ${photoUrl}`)
+
+        // Add photo reference to issue
+        issueBody += `\n\n### Profile Photo\n\n![${data.photoFileName}](${photoUrl})\n\n**Photo URL:** ${photoUrl}`
+
+      } catch (err) {
+        console.error('Error uploading photo:', err)
+        issueBody += `\n\n### Profile Photo\n\n⚠️ Photo upload failed: ${data.photoFileName}`
       }
     }
 
@@ -135,36 +217,6 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     }
 
     const issueData = await response.json()
-
-    // If large photo was provided, add it as a comment to avoid issue body size limits
-    if (photoToComment && data.photo && data.photoFileName) {
-      console.log(`Adding large photo comment to issue #${issueData.number}...`)
-      const commentBody = `### Photo Data\n\nFilename: \`${data.photoFileName}\`\n\n<details>\n<summary>Base64 Photo Data (click to expand)</summary>\n\n\`\`\`\n${data.photo}\n\`\`\`\n\n</details>`
-
-      try {
-        const commentResponse = await fetch(`https://api.github.com/repos/jordpo/jordpo.github.io/issues/${issueData.number}/comments`, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/vnd.github.v3+json',
-            'Authorization': `token ${githubToken}`,
-            'Content-Type': 'application/json',
-            'User-Agent': 'Netlify-Function'
-          },
-          body: JSON.stringify({
-            body: commentBody
-          })
-        })
-
-        if (!commentResponse.ok) {
-          const errorData = await commentResponse.json()
-          console.error('Failed to add photo comment:', errorData)
-        } else {
-          console.log('Photo comment added successfully')
-        }
-      } catch (err) {
-        console.error('Error adding photo comment:', err)
-      }
-    }
 
     // Return success with issue URL
     return {
