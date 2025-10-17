@@ -147,7 +147,7 @@
                 Profile Photo (Optional)
               </label>
               <p class="text-sm text-gray-500 mb-2">
-                Add a photo to make your recommendation more personal (max 1MB)
+                Add a photo to make your recommendation more personal (max 500KB recommended)
               </p>
               <input
                 id="photo"
@@ -288,14 +288,24 @@ async function handlePhotoUpload(event: Event) {
 
   if (!file) return
 
-  // Check file size (1MB limit)
-  if (file.size > 1024 * 1024) {
-    error.value = 'Photo must be smaller than 1MB'
+  // File size limits
+  const MAX_SIZE = 500 * 1024 // 500KB max recommended
+  const WARN_SIZE = 200 * 1024 // 200KB warning threshold
+
+  // Check file size
+  if (file.size > MAX_SIZE) {
+    error.value = `Photo is too large (${(file.size / 1024).toFixed(0)}KB). Maximum size is 500KB. Please resize or compress your image.`
     target.value = ''
+    photoPreview.value = null
     return
   }
 
-  error.value = ''
+  // Warning for larger files
+  if (file.size > WARN_SIZE) {
+    error.value = `Photo size: ${(file.size / 1024).toFixed(0)}KB. Larger images (>200KB) will be added as comments instead of inline.`
+  } else {
+    error.value = ''
+  }
 
   // Create preview
   const reader = new FileReader()

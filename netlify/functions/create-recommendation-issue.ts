@@ -86,9 +86,22 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
 
     issueBody += `\n\n### Testimonial\n\n${data.testimonial}`
 
-    // Add photo if provided
+    // Handle photo based on size
+    let photoToComment = false
     if (data.photo && data.photoFileName) {
-      issueBody += `\n\n### Profile Photo\n\nFilename: \`${data.photoFileName}\`\n\n<details>\n<summary>Base64 Photo Data (click to expand)</summary>\n\n\`\`\`\n${data.photo}\n\`\`\`\n\n</details>`
+      // Estimate base64 size (rough calculation: base64 is ~1.33x original size)
+      const estimatedSize = data.photo.length * 0.75 // Reverse calculation
+      const SIZE_THRESHOLD = 50 * 1024 // 50KB threshold for inline vs comment
+
+      if (estimatedSize > SIZE_THRESHOLD) {
+        // Large photo - will be added as comment
+        issueBody += `\n\n### Profile Photo\n\n✅ Photo uploaded: \`${data.photoFileName}\` (${(estimatedSize / 1024).toFixed(0)}KB)`
+        issueBody += `\n\n_Note: Photo data will be attached as a comment to avoid issue size limits._`
+        photoToComment = true
+      } else {
+        // Small photo - include inline
+        issueBody += `\n\n### Profile Photo\n\nFilename: \`${data.photoFileName}\`\n\n<details>\n<summary>Base64 Photo Data (click to expand)</summary>\n\n\`\`\`\n${data.photo}\n\`\`\`\n\n</details>`
+      }
     }
 
     issueBody += `\n\n---\n\n**Next Steps:** Jordan will review this recommendation and approve it by commenting \`/approve\` on this issue. Once approved, a pull request will be automatically created.`
@@ -122,6 +135,36 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     }
 
     const issueData = await response.json()
+
+    // If large photo was provided, add it as a comment to avoid issue body size limits
+    if (photoToComment && data.photo && data.photoFileName) {
+      console.log(`Adding large photo comment to issue #${issueData.number}...`)
+      const commentBody = `### Photo Data\n\nFilename: \`${data.photoFileName}\`\n\n<details>\n<summary>Base64 Photo Data (click to expand)</summary>\n\n\`\`\`\n${data.photo}\n\`\`\`\n\n</details>`
+
+      try {
+        const commentResponse = await fetch(`https://api.github.com/repos/jordpo/jordpo.github.io/issues/${issueData.number}/comments`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+            'Authorization': `token ${githubToken}`,
+            'Content-Type': 'application/json',
+            'User-Agent': 'Netlify-Function'
+          },
+          body: JSON.stringify({
+            body: commentBody
+          })
+        })
+
+        if (!commentResponse.ok) {
+          const errorData = await commentResponse.json()
+          console.error('Failed to add photo comment:', errorData)
+        } else {
+          console.log('Photo comment added successfully')
+        }
+      } catch (err) {
+        console.error('Error adding photo comment:', err)
+      }
+    }
 
     // Return success with issue URL
     return {

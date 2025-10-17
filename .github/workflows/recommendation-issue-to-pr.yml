@@ -91,12 +91,27 @@ jobs:
             const testimonialMatch = issueBody.match(/### Testimonial\s*\n\s*\n(.+?)(?=\n\n###|\n\n---|\n\n\*\*|$)/s);
             if (testimonialMatch) data.testimonial = testimonialMatch[1].trim();
 
-            // Parse photo data if present
+            // Parse photo filename from issue body
             const photoMatch = issueBody.match(/Filename:\s*`(.+?)`/);
             if (photoMatch) data.photoFileName = photoMatch[1].trim();
 
-            const photoDataMatch = issueBody.match(/```\n(data:image[^`]+)\n```/);
-            if (photoDataMatch) data.photo = photoDataMatch[1].trim();
+            // Fetch comments to get photo data (if it was added as a comment)
+            if (data.photoFileName) {
+              const commentsResponse = await github.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber
+              });
+
+              // Look for photo data in comments
+              for (const comment of commentsResponse.data) {
+                const photoDataMatch = comment.body.match(/```\n(data:image[^`]+)\n```/);
+                if (photoDataMatch) {
+                  data.photo = photoDataMatch[1].trim();
+                  break;
+                }
+              }
+            }
 
             console.log('Parsed data:', JSON.stringify(data, null, 2));
 
