@@ -1,0 +1,197 @@
+name: Create Recommendation PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Recommender name'
+        required: true
+        type: string
+      title:
+        description: 'Recommender title'
+        required: false
+        type: string
+      company:
+        description: 'Recommender company'
+        required: false
+        type: string
+      relationship:
+        description: 'Relationship to Jordan'
+        required: false
+        type: string
+      githubUsername:
+        description: 'GitHub username'
+        required: false
+        type: string
+      skillRecommendations:
+        description: 'Skills to recommend (comma-separated)'
+        required: false
+        type: string
+      testimonial:
+        description: 'Recommendation testimonial'
+        required: true
+        type: string
+      photo:
+        description: 'Base64 encoded photo (optional)'
+        required: false
+        type: string
+      photoFileName:
+        description: 'Photo filename (optional)'
+        required: false
+        type: string
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate timestamp
+        id: timestamp
+        run: echo "timestamp=$(date +%s)" >> $GITHUB_OUTPUT
+
+      - name: Create branch name
+        id: branch
+        run: |
+          # Sanitize name for branch
+          SANITIZED_NAME=$(echo "${{ inputs.name }}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
+          BRANCH_NAME="recommendation/${SANITIZED_NAME}-${{ steps.timestamp.outputs.timestamp }}"
+          echo "name=${BRANCH_NAME}" >> $GITHUB_OUTPUT
+
+      - name: Create new branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b ${{ steps.branch.outputs.name }}
+
+      - name: Process photo if provided
+        if: inputs.photo != ''
+        run: |
+          # Extract file extension from filename or default to jpg
+          if [ -n "${{ inputs.photoFileName }}" ]; then
+            EXTENSION="${{ inputs.photoFileName }##*.}"
+          else
+            EXTENSION="jpg"
+          fi
+
+          # Create sanitized filename
+          SANITIZED_NAME=$(echo "${{ inputs.name }}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
+          PHOTO_FILENAME="${SANITIZED_NAME}-${{ steps.timestamp.outputs.timestamp }}.${EXTENSION}"
+
+          # Save photo filename for later use
+          echo "PHOTO_FILENAME=${PHOTO_FILENAME}" >> $GITHUB_ENV
+
+          # Decode and save photo
+          echo "${{ inputs.photo }}" | base64 -d > "public/images/recommendations/${PHOTO_FILENAME}"
+
+      - name: Update recommendations.json
+        run: |
+          # Read current recommendations
+          CURRENT_DATA=$(cat public/data/recommendations.json)
+
+          # Build skills array
+          SKILLS_JSON="[]"
+          if [ -n "${{ inputs.skillRecommendations }}" ]; then
+            # Convert comma-separated string to JSON array
+            SKILLS_JSON=$(echo "${{ inputs.skillRecommendations }}" | node -e "
+              const input = require('fs').readFileSync(0, 'utf-8').trim();
+              const skills = input.split(',').map(s => s.trim()).filter(s => s);
+              console.log(JSON.stringify(skills));
+            ")
+          fi
+
+          # Build new recommendation JSON
+          NEW_REC=$(node -e "
+            const rec = {
+              name: '${{ inputs.name }}',
+              testimonial: \`${{ inputs.testimonial }}\`,
+              date: new Date().toISOString().split('T')[0]
+            };
+
+            if ('${{ inputs.title }}') rec.title = '${{ inputs.title }}';
+            if ('${{ inputs.company }}') rec.company = '${{ inputs.company }}';
+            if ('${{ inputs.relationship }}') rec.relationship = '${{ inputs.relationship }}';
+            if ('${{ inputs.githubUsername }}') rec.githubUsername = '${{ inputs.githubUsername }}';
+            if ('${PHOTO_FILENAME}') rec.photo = '${PHOTO_FILENAME}';
+
+            const skills = ${SKILLS_JSON};
+            if (skills.length > 0) rec.skillRecommendations = skills;
+
+            console.log(JSON.stringify(rec, null, 2));
+          ")
+
+          # Append to recommendations array
+          UPDATED_DATA=$(echo "${CURRENT_DATA}" | node -e "
+            const current = JSON.parse(require('fs').readFileSync(0, 'utf-8'));
+            const newRec = ${NEW_REC};
+            current.push(newRec);
+            console.log(JSON.stringify(current, null, 2));
+          ")
+
+          # Write back to file
+          echo "${UPDATED_DATA}" > public/data/recommendations.json
+
+      - name: Commit changes
+        run: |
+          git add public/data/recommendations.json
+          if [ -n "${PHOTO_FILENAME}" ]; then
+            git add "public/images/recommendations/${PHOTO_FILENAME}"
+          fi
+          git commit -m "Add recommendation from ${{ inputs.name }}
+
+          Recommendation submitted by ${{ inputs.name }}
+
+          This PR was automatically generated by the recommendation submission workflow."
+
+      - name: Push branch
+        run: git push origin ${{ steps.branch.outputs.name }}
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Build PR body
+          PR_BODY="## New Recommendation Submission
+
+          **From:** ${{ inputs.name }}"
+
+          if [ -n "${{ inputs.title }}" ] || [ -n "${{ inputs.company }}" ]; then
+            PR_BODY="${PR_BODY}
+          **Position:** ${{ inputs.title }}$([ -n "${{ inputs.company }}" ] && echo " at ${{ inputs.company }}")"
+          fi
+
+          if [ -n "${{ inputs.relationship }}" ]; then
+            PR_BODY="${PR_BODY}
+          **Relationship:** ${{ inputs.relationship }}"
+          fi
+
+          if [ -n "${{ inputs.githubUsername }}" ]; then
+            PR_BODY="${PR_BODY}
+          **GitHub:** [@${{ inputs.githubUsername }}](https://github.com/${{ inputs.githubUsername }})"
+          fi
+
+          if [ -n "${{ inputs.skillRecommendations }}" ]; then
+            PR_BODY="${PR_BODY}
+          **Skills Endorsed:** ${{ inputs.skillRecommendations }}"
+          fi
+
+          PR_BODY="${PR_BODY}
+
+          ### Testimonial
+          > ${{ inputs.testimonial }}
+
+          ---
+
+          Please review this recommendation and merge if approved. The recommendation will automatically appear on your portfolio once merged."
+
+          gh pr create \
+            --title "Add recommendation from ${{ inputs.name }}" \
+            --body "${PR_BODY}" \
+            --base main \
+            --head ${{ steps.branch.outputs.name }}
