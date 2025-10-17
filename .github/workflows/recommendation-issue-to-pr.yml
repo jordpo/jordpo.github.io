@@ -104,7 +104,7 @@ jobs:
             const patterns = [
               /\*\*Photo URL:\*\*\s+(https?:\/\/[^\s\)]+)/i,  // **Photo URL:** https://...
               /Photo URL:\s+(https?:\/\/[^\s\)]+)/i,           // Photo URL: https://...
-              /!\[.*?\]\((https:\/\/github\.com\/[^\)]+)\)/   // Extract from markdown image ![...](...)
+              /!\[.*?\]\((https?:\/\/[^\)]+)\)/               // Extract from markdown image ![...](https://...)
             ];
 
             for (const pattern of patterns) {
