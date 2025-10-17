@@ -92,13 +92,27 @@ jobs:
             if (testimonialMatch) data.testimonial = testimonialMatch[1].trim();
 
             // Parse photo URL from issue body (now stored in GitHub Releases)
-            // The issue body has: **Photo URL:** https://...
-            // In markdown source it's: **Photo URL:** https://...
-            // Match "Photo URL:" (with or without asterisks) followed by URL
-            let photoUrlMatch = issueBody.match(/\*\*Photo URL:\*\*\s+(https:\/\/[^\s\n]+)/);
-            if (!photoUrlMatch) {
-              // Try without the markdown bold
-              photoUrlMatch = issueBody.match(/Photo URL:\s+(https:\/\/[^\s\n]+)/);
+            // The serverless function generates:
+            // ### Profile Photo
+            //
+            // ![filename.jpg](https://...)
+            //
+            // **Photo URL:** https://...
+
+            // Try multiple regex patterns to match the Photo URL line
+            let photoUrlMatch = null;
+            const patterns = [
+              /\*\*Photo URL:\*\*\s+(https?:\/\/[^\s\)]+)/i,  // **Photo URL:** https://...
+              /Photo URL:\s+(https?:\/\/[^\s\)]+)/i,           // Photo URL: https://...
+              /!\[.*?\]\((https:\/\/github\.com\/[^\)]+)\)/   // Extract from markdown image ![...](...)
+            ];
+
+            for (const pattern of patterns) {
+              photoUrlMatch = issueBody.match(pattern);
+              if (photoUrlMatch) {
+                console.log(`Matched photo URL with pattern: ${pattern}`);
+                break;
+              }
             }
 
             if (photoUrlMatch) {
@@ -110,7 +124,16 @@ jobs:
               console.log('Photo filename:', data.photoFileName);
             } else {
               console.log('No photo URL found in issue body');
-              console.log('Searching for pattern in:', issueBody.substring(issueBody.indexOf('Profile Photo'), issueBody.indexOf('---')));
+              // Show the Profile Photo section if it exists
+              const photoSectionStart = issueBody.indexOf('### Profile Photo');
+              if (photoSectionStart !== -1) {
+                const nextSectionStart = issueBody.indexOf('---', photoSectionStart);
+                const photoSection = issueBody.substring(photoSectionStart, nextSectionStart !== -1 ? nextSectionStart : photoSectionStart + 500);
+                console.log('Profile Photo section found:');
+                console.log(photoSection);
+              } else {
+                console.log('No Profile Photo section found in issue body');
+              }
             }
 
             console.log('Parsed data:', JSON.stringify(data, null, 2));
