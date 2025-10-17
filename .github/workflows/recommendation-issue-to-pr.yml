@@ -91,12 +91,50 @@ jobs:
             const testimonialMatch = issueBody.match(/### Testimonial\s*\n\s*\n(.+?)(?=\n\n###|\n\n---|\n\n\*\*|$)/s);
             if (testimonialMatch) data.testimonial = testimonialMatch[1].trim();
 
-            // Parse photo data if present
-            const photoMatch = issueBody.match(/Filename:\s*`(.+?)`/);
-            if (photoMatch) data.photoFileName = photoMatch[1].trim();
+            // Parse photo URL from issue body (now stored in GitHub Releases)
+            // The serverless function generates:
+            // ### Profile Photo
+            //
+            // ![filename.jpg](https://...)
+            //
+            // **Photo URL:** https://...
 
-            const photoDataMatch = issueBody.match(/```\n(data:image[^`]+)\n```/);
-            if (photoDataMatch) data.photo = photoDataMatch[1].trim();
+            // Try multiple regex patterns to match the Photo URL line
+            let photoUrlMatch = null;
+            const patterns = [
+              /\*\*Photo URL:\*\*\s+(https?:\/\/[^\s\)]+)/i,  // **Photo URL:** https://...
+              /Photo URL:\s+(https?:\/\/[^\s\)]+)/i,           // Photo URL: https://...
+              /!\[.*?\]\((https?:\/\/[^\)]+)\)/               // Extract from markdown image ![...](https://...)
+            ];
+
+            for (const pattern of patterns) {
+              photoUrlMatch = issueBody.match(pattern);
+              if (photoUrlMatch) {
+                console.log(`Matched photo URL with pattern: ${pattern}`);
+                break;
+              }
+            }
+
+            if (photoUrlMatch) {
+              data.photoUrl = photoUrlMatch[1].trim();
+              // Extract filename from URL
+              const urlParts = data.photoUrl.split('/');
+              data.photoFileName = urlParts[urlParts.length - 1];
+              console.log('Found photo URL:', data.photoUrl);
+              console.log('Photo filename:', data.photoFileName);
+            } else {
+              console.log('No photo URL found in issue body');
+              // Show the Profile Photo section if it exists
+              const photoSectionStart = issueBody.indexOf('### Profile Photo');
+              if (photoSectionStart !== -1) {
+                const nextSectionStart = issueBody.indexOf('---', photoSectionStart);
+                const photoSection = issueBody.substring(photoSectionStart, nextSectionStart !== -1 ? nextSectionStart : photoSectionStart + 500);
+                console.log('Profile Photo section found:');
+                console.log(photoSection);
+              } else {
+                console.log('No Profile Photo section found in issue body');
+              }
+            }
 
             console.log('Parsed data:', JSON.stringify(data, null, 2));
 
@@ -108,8 +146,8 @@ jobs:
             core.setOutput('githubUsername', data.githubUsername);
             core.setOutput('skills', JSON.stringify(data.skills));
             core.setOutput('testimonial', data.testimonial);
-            core.setOutput('photo', data.photo);
-            core.setOutput('photoFileName', data.photoFileName);
+            core.setOutput('photoUrl', data.photoUrl || '');
+            core.setOutput('photoFileName', data.photoFileName || '');
             core.setOutput('issueNumber', issueNumber.toString());
 
       - name: Generate timestamp
@@ -130,8 +168,11 @@ jobs:
           git checkout -b ${{ steps.branch.outputs.name }}
 
       - name: Process photo if provided
-        if: steps.parse.outputs.photo != ''
+        if: steps.parse.outputs.photoUrl != ''
         run: |
+          echo "Photo URL from outputs: ${{ steps.parse.outputs.photoUrl }}"
+          echo "Photo filename from outputs: ${{ steps.parse.outputs.photoFileName }}"
+
           FILENAME="${{ steps.parse.outputs.photoFileName }}"
           if [ -n "$FILENAME" ]; then
             EXTENSION="${FILENAME##*.}"
@@ -142,10 +183,19 @@ jobs:
           SANITIZED_NAME=$(echo "${{ steps.parse.outputs.name }}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
           PHOTO_FILENAME="${SANITIZED_NAME}-${{ steps.timestamp.outputs.timestamp }}.${EXTENSION}"
 
+          echo "Saving photo as: ${PHOTO_FILENAME}"
           echo "PHOTO_FILENAME=${PHOTO_FILENAME}" >> $GITHUB_ENV
 
-          # Decode and save photo
-          echo "${{ steps.parse.outputs.photo }}" | base64 -d > "public/images/recommendations/${PHOTO_FILENAME}"
+          # Download photo from GitHub Release URL
+          echo "Downloading from: ${{ steps.parse.outputs.photoUrl }}"
+          curl -L "${{ steps.parse.outputs.photoUrl }}" -o "public/images/recommendations/${PHOTO_FILENAME}"
+
+          if [ -f "public/images/recommendations/${PHOTO_FILENAME}" ]; then
+            echo "Photo downloaded successfully"
+            ls -lh "public/images/recommendations/${PHOTO_FILENAME}"
+          else
+            echo "ERROR: Photo download failed"
+          fi
 
       - name: Update recommendations.json
         uses: actions/github-script@v7
