@@ -92,15 +92,18 @@ jobs:
             if (testimonialMatch) data.testimonial = testimonialMatch[1].trim();
 
             // Parse photo URL from issue body (now stored in GitHub Releases)
-            const photoUrlMatch = issueBody.match(/\*\*Photo URL:\*\*\s*(https:\/\/[^\s]+)/);
+            // Match the markdown image AND the Photo URL line
+            const photoUrlMatch = issueBody.match(/\*\*Photo URL:\*\*\s+(https:\/\/[^\s\n]+)/);
             if (photoUrlMatch) {
               data.photoUrl = photoUrlMatch[1].trim();
               // Extract filename from URL
               const urlParts = data.photoUrl.split('/');
               data.photoFileName = urlParts[urlParts.length - 1];
               console.log('Found photo URL:', data.photoUrl);
+              console.log('Photo filename:', data.photoFileName);
             } else {
               console.log('No photo URL found in issue body');
+              console.log('Issue body:', issueBody);
             }
 
             console.log('Parsed data:', JSON.stringify(data, null, 2));
