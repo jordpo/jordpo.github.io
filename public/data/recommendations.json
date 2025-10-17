@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "name": "dd",
+    "testimonial": "dd",
+    "date": "2025-10-17",
+    "title": "dd",
+    "company": "dd",
+    "relationship": "dd",
+    "githubUsername": "dd",
+    "skillRecommendations": [
+      "React",
+      "OpenAI/Anthropic APIs",
+      "Docker"
+    ]
+  }
+]
