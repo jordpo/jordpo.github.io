@@ -312,64 +312,41 @@ async function handleSubmit() {
   isSubmitting.value = true
 
   try {
-    // Build the issue body with structured data
-    let issueBody = `## Recommendation Submission
-
-**From:** ${formData.value.name}`
-
-    if (formData.value.title || formData.value.company) {
-      issueBody += `\n**Position:** ${[formData.value.title, formData.value.company].filter(Boolean).join(' at ')}`
-    }
-
-    if (formData.value.relationship) {
-      issueBody += `\n**Relationship:** ${formData.value.relationship}`
-    }
-
-    if (formData.value.githubUsername) {
-      issueBody += `\n**GitHub:** @${formData.value.githubUsername}`
-    }
-
-    if (formData.value.skillRecommendations.length > 0) {
-      issueBody += `\n**Skills Endorsed:** ${formData.value.skillRecommendations.join(', ')}`
-    }
-
-    issueBody += `\n\n### Testimonial\n\n${formData.value.testimonial}`
-
-    // Add photo if provided
-    if (formData.value.photo && formData.value.photoFileName) {
-      issueBody += `\n\n### Profile Photo\n\nFilename: \`${formData.value.photoFileName}\`\n\n<details>\n<summary>Base64 Photo Data (click to expand)</summary>\n\n\`\`\`\n${formData.value.photo}\n\`\`\`\n\n</details>`
-    }
-
-    issueBody += `\n\n---\n\n**Next Steps:** Jordan will review this recommendation and approve it by commenting \`/approve\` on this issue. Once approved, a pull request will be automatically created.`
-
-    // Create the GitHub issue using the public API
-    const issueUrl = 'https://api.github.com/repos/jordpo/jordpo.github.io/issues'
-
-    const response = await fetch(issueUrl, {
+    // Call the Netlify serverless function to create the GitHub issue
+    const response = await fetch('/.netlify/functions/create-recommendation-issue', {
       method: 'POST',
       headers: {
-        'Accept': 'application/vnd.github.v3+json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        title: `Recommendation from ${formData.value.name}`,
-        body: issueBody,
-        labels: ['recommendation']
+        name: formData.value.name,
+        title: formData.value.title || undefined,
+        company: formData.value.company || undefined,
+        relationship: formData.value.relationship || undefined,
+        githubUsername: formData.value.githubUsername || undefined,
+        skillRecommendations: formData.value.skillRecommendations.length > 0
+          ? formData.value.skillRecommendations
+          : undefined,
+        testimonial: formData.value.testimonial,
+        photo: formData.value.photo || undefined,
+        photoFileName: formData.value.photoFileName || undefined
       })
     })
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
-      throw new Error(errorData.message || `Failed to create issue: ${response.statusText}`)
+      throw new Error(errorData.error || `Failed to submit recommendation: ${response.statusText}`)
     }
 
-    const issueData = await response.json()
+    const result = await response.json()
 
     // Show success and open the issue
     success.value = true
 
     // Open the created issue in a new tab
-    window.open(issueData.html_url, '_blank')
+    if (result.issueUrl) {
+      window.open(result.issueUrl, '_blank')
+    }
 
     // Close modal after 3 seconds
     setTimeout(() => {
