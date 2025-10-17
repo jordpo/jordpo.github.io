@@ -92,8 +92,15 @@ jobs:
             if (testimonialMatch) data.testimonial = testimonialMatch[1].trim();
 
             // Parse photo URL from issue body (now stored in GitHub Releases)
-            // Match the markdown image AND the Photo URL line
-            const photoUrlMatch = issueBody.match(/\*\*Photo URL:\*\*\s+(https:\/\/[^\s\n]+)/);
+            // The issue body has: **Photo URL:** https://...
+            // In markdown source it's: **Photo URL:** https://...
+            // Match "Photo URL:" (with or without asterisks) followed by URL
+            let photoUrlMatch = issueBody.match(/\*\*Photo URL:\*\*\s+(https:\/\/[^\s\n]+)/);
+            if (!photoUrlMatch) {
+              // Try without the markdown bold
+              photoUrlMatch = issueBody.match(/Photo URL:\s+(https:\/\/[^\s\n]+)/);
+            }
+
             if (photoUrlMatch) {
               data.photoUrl = photoUrlMatch[1].trim();
               // Extract filename from URL
@@ -103,7 +110,7 @@ jobs:
               console.log('Photo filename:', data.photoFileName);
             } else {
               console.log('No photo URL found in issue body');
-              console.log('Issue body:', issueBody);
+              console.log('Searching for pattern in:', issueBody.substring(issueBody.indexOf('Profile Photo'), issueBody.indexOf('---')));
             }
 
             console.log('Parsed data:', JSON.stringify(data, null, 2));
