@@ -2,6 +2,8 @@
 
 This portfolio includes a recommendations system that allows visitors to submit professional recommendations via GitHub Issues, which are reviewed and approved before appearing on the site.
 
+**⚠️ Requires Netlify Deployment:** This feature uses Netlify serverless functions. See [NETLIFY_DEPLOYMENT.md](NETLIFY_DEPLOYMENT.md) for setup instructions.
+
 ## How It Works
 
 ### For Visitors Submitting Recommendations
@@ -166,10 +168,12 @@ Potential improvements you might consider:
 
 - The form validates required fields client-side
 - Photos are size-limited to 1MB
+- Serverless function uses GitHub Personal Access Token (stored securely in Netlify)
+- Token permissions are scoped to minimum required (`repo`, `write:org`)
 - GitHub Actions workflow runs in GitHub's secure environment
 - PRs require your manual approval before merging
-- No sensitive data is stored or transmitted
-- Workflow uses GitHub's built-in authentication
+- No sensitive data is stored or transmitted beyond GitHub
+- CORS is properly configured to prevent unauthorized domains
 
 ## Troubleshooting
 
