@@ -74,8 +74,9 @@ jobs:
         if: inputs.photo != ''
         run: |
           # Extract file extension from filename or default to jpg
-          if [ -n "${{ inputs.photoFileName }}" ]; then
-            EXTENSION="${{ inputs.photoFileName }##*.}"
+          FILENAME="${{ inputs.photoFileName }}"
+          if [ -n "$FILENAME" ]; then
+            EXTENSION="${FILENAME##*.}"
           else
             EXTENSION="jpg"
           fi
