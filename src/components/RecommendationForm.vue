@@ -169,7 +169,7 @@
                 </svg>
                 <div class="text-sm text-blue-800">
                   <p class="font-medium mb-1">How it works:</p>
-                  <p>Your recommendation will create a pull request on Jordan's GitHub repository. Once reviewed and approved, it will appear on this page!</p>
+                  <p>Your recommendation will be submitted as a GitHub issue for Jordan to review. Once approved, it will automatically be added to this page. No GitHub account required!</p>
                 </div>
               </div>
             </div>
@@ -191,8 +191,8 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <div class="text-sm text-green-800">
-                  <p class="font-medium mb-1">Details copied to clipboard!</p>
-                  <p>A new tab has opened with the GitHub Actions workflow. Please complete the submission there to create your recommendation PR.</p>
+                  <p class="font-medium mb-1">Recommendation submitted successfully!</p>
+                  <p>Your recommendation has been created as a GitHub issue. Jordan will review it and approve it for publication. You can track the status via the issue that just opened.</p>
                 </div>
               </div>
             </div>
@@ -312,60 +312,72 @@ async function handleSubmit() {
   isSubmitting.value = true
 
   try {
-    const payload = {
-      name: formData.value.name,
-      title: formData.value.title || undefined,
-      company: formData.value.company || undefined,
-      relationship: formData.value.relationship || undefined,
-      githubUsername: formData.value.githubUsername || undefined,
-      skillRecommendations: formData.value.skillRecommendations.length > 0
-        ? formData.value.skillRecommendations
-        : undefined,
-      testimonial: formData.value.testimonial,
-      photo: formData.value.photo || undefined,
-      photoFileName: formData.value.photoFileName || undefined,
+    // Build the issue body with structured data
+    let issueBody = `## Recommendation Submission
+
+**From:** ${formData.value.name}`
+
+    if (formData.value.title || formData.value.company) {
+      issueBody += `\n**Position:** ${[formData.value.title, formData.value.company].filter(Boolean).join(' at ')}`
     }
 
-    // Build manual instructions URL
-    const workflowUrl = 'https://github.com/jordpo/jordpo.github.io/actions/workflows/create-recommendation-pr.yml'
-
-    // For now, copy to clipboard and show instructions
-    const instructions = `Thank you for recommending Jordan!
-
-To complete your submission, please:
-1. Visit: ${workflowUrl}
-2. Click "Run workflow"
-3. Fill in the form with your information
-4. Click "Run workflow"
-
-Your recommendation details have been copied to your clipboard for easy pasting!
-
----
-Name: ${payload.name}
-${payload.title ? `Title: ${payload.title}` : ''}
-${payload.company ? `Company: ${payload.company}` : ''}
-${payload.relationship ? `Relationship: ${payload.relationship}` : ''}
-${payload.githubUsername ? `GitHub Username: ${payload.githubUsername}` : ''}
-${payload.skillRecommendations ? `Skills: ${payload.skillRecommendations.join(', ')}` : ''}
-Testimonial: ${payload.testimonial}`
-
-    // Copy to clipboard
-    if (navigator.clipboard) {
-      await navigator.clipboard.writeText(instructions)
+    if (formData.value.relationship) {
+      issueBody += `\n**Relationship:** ${formData.value.relationship}`
     }
 
-    // Open GitHub Actions page
-    window.open(workflowUrl, '_blank')
+    if (formData.value.githubUsername) {
+      issueBody += `\n**GitHub:** @${formData.value.githubUsername}`
+    }
 
+    if (formData.value.skillRecommendations.length > 0) {
+      issueBody += `\n**Skills Endorsed:** ${formData.value.skillRecommendations.join(', ')}`
+    }
+
+    issueBody += `\n\n### Testimonial\n\n${formData.value.testimonial}`
+
+    // Add photo if provided
+    if (formData.value.photo && formData.value.photoFileName) {
+      issueBody += `\n\n### Profile Photo\n\nFilename: \`${formData.value.photoFileName}\`\n\n<details>\n<summary>Base64 Photo Data (click to expand)</summary>\n\n\`\`\`\n${formData.value.photo}\n\`\`\`\n\n</details>`
+    }
+
+    issueBody += `\n\n---\n\n**Next Steps:** Jordan will review this recommendation and approve it by commenting \`/approve\` on this issue. Once approved, a pull request will be automatically created.`
+
+    // Create the GitHub issue using the public API
+    const issueUrl = 'https://api.github.com/repos/jordpo/jordpo.github.io/issues'
+
+    const response = await fetch(issueUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title: `Recommendation from ${formData.value.name}`,
+        body: issueBody,
+        labels: ['recommendation']
+      })
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.message || `Failed to create issue: ${response.statusText}`)
+    }
+
+    const issueData = await response.json()
+
+    // Show success and open the issue
     success.value = true
 
-    // Close after 5 seconds
+    // Open the created issue in a new tab
+    window.open(issueData.html_url, '_blank')
+
+    // Close modal after 3 seconds
     setTimeout(() => {
       close()
-    }, 5000)
+    }, 3000)
 
   } catch (err) {
-    error.value = err instanceof Error ? err.message : 'Failed to submit recommendation'
+    error.value = err instanceof Error ? err.message : 'Failed to submit recommendation. Please try again.'
   } finally {
     isSubmitting.value = false
   }

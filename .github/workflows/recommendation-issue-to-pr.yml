@@ -1,0 +1,238 @@
+name: Convert Recommendation Issue to PR
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  create-pr:
+    # Only run if:
+    # 1. Comment is on an issue (not a PR)
+    # 2. Issue has the 'recommendation' label
+    # 3. Comment contains '/approve'
+    # 4. Comment is from repo owner
+    if: |
+      !github.event.issue.pull_request &&
+      contains(github.event.issue.labels.*.name, 'recommendation') &&
+      contains(github.event.comment.body, '/approve') &&
+      github.event.comment.user.login == github.repository_owner
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Parse issue body
+        id: parse
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueBody = context.payload.issue.body;
+            const issueNumber = context.payload.issue.number;
+
+            console.log('Parsing issue body:', issueBody);
+
+            // Extract data from issue body
+            const data = {
+              name: '',
+              title: '',
+              company: '',
+              relationship: '',
+              githubUsername: '',
+              skills: [],
+              testimonial: '',
+              photo: '',
+              photoFileName: ''
+            };
+
+            // Parse name
+            const nameMatch = issueBody.match(/\*\*From:\*\*\s*(.+)/);
+            if (nameMatch) data.name = nameMatch[1].trim();
+
+            // Parse position (title and/or company)
+            const positionMatch = issueBody.match(/\*\*Position:\*\*\s*(.+)/);
+            if (positionMatch) {
+              const position = positionMatch[1].trim();
+              const parts = position.split(' at ');
+              if (parts.length === 2) {
+                data.title = parts[0].trim();
+                data.company = parts[1].trim();
+              } else {
+                data.title = position;
+              }
+            }
+
+            // Parse relationship
+            const relationshipMatch = issueBody.match(/\*\*Relationship:\*\*\s*(.+)/);
+            if (relationshipMatch) data.relationship = relationshipMatch[1].trim();
+
+            // Parse GitHub username
+            const githubMatch = issueBody.match(/\*\*GitHub:\*\*\s*@?(\w+)/);
+            if (githubMatch) data.githubUsername = githubMatch[1].trim();
+
+            // Parse skills
+            const skillsMatch = issueBody.match(/\*\*Skills Endorsed:\*\*\s*(.+)/);
+            if (skillsMatch) {
+              data.skills = skillsMatch[1].split(',').map(s => s.trim()).filter(s => s);
+            }
+
+            // Parse testimonial
+            const testimonialMatch = issueBody.match(/### Testimonial\s*\n\s*\n(.+?)(?=\n\n###|\n\n---|\n\n\*\*|$)/s);
+            if (testimonialMatch) data.testimonial = testimonialMatch[1].trim();
+
+            // Parse photo data if present
+            const photoMatch = issueBody.match(/Filename:\s*`(.+?)`/);
+            if (photoMatch) data.photoFileName = photoMatch[1].trim();
+
+            const photoDataMatch = issueBody.match(/```\n(data:image[^`]+)\n```/);
+            if (photoDataMatch) data.photo = photoDataMatch[1].trim();
+
+            console.log('Parsed data:', JSON.stringify(data, null, 2));
+
+            // Set outputs
+            core.setOutput('name', data.name);
+            core.setOutput('title', data.title);
+            core.setOutput('company', data.company);
+            core.setOutput('relationship', data.relationship);
+            core.setOutput('githubUsername', data.githubUsername);
+            core.setOutput('skills', JSON.stringify(data.skills));
+            core.setOutput('testimonial', data.testimonial);
+            core.setOutput('photo', data.photo);
+            core.setOutput('photoFileName', data.photoFileName);
+            core.setOutput('issueNumber', issueNumber.toString());
+
+      - name: Generate timestamp
+        id: timestamp
+        run: echo "timestamp=$(date +%s)" >> $GITHUB_OUTPUT
+
+      - name: Create branch name
+        id: branch
+        run: |
+          SANITIZED_NAME=$(echo "${{ steps.parse.outputs.name }}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
+          BRANCH_NAME="recommendation/${SANITIZED_NAME}-${{ steps.timestamp.outputs.timestamp }}"
+          echo "name=${BRANCH_NAME}" >> $GITHUB_OUTPUT
+
+      - name: Create new branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b ${{ steps.branch.outputs.name }}
+
+      - name: Process photo if provided
+        if: steps.parse.outputs.photo != ''
+        run: |
+          FILENAME="${{ steps.parse.outputs.photoFileName }}"
+          if [ -n "$FILENAME" ]; then
+            EXTENSION="${FILENAME##*.}"
+          else
+            EXTENSION="jpg"
+          fi
+
+          SANITIZED_NAME=$(echo "${{ steps.parse.outputs.name }}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
+          PHOTO_FILENAME="${SANITIZED_NAME}-${{ steps.timestamp.outputs.timestamp }}.${EXTENSION}"
+
+          echo "PHOTO_FILENAME=${PHOTO_FILENAME}" >> $GITHUB_ENV
+
+          # Decode and save photo
+          echo "${{ steps.parse.outputs.photo }}" | base64 -d > "public/images/recommendations/${PHOTO_FILENAME}"
+
+      - name: Update recommendations.json
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'public/data/recommendations.json';
+
+            // Read current recommendations
+            const current = JSON.parse(fs.readFileSync(path, 'utf8'));
+
+            // Build new recommendation
+            const newRec = {
+              name: '${{ steps.parse.outputs.name }}',
+              testimonial: `${{ steps.parse.outputs.testimonial }}`,
+              date: new Date().toISOString().split('T')[0]
+            };
+
+            if ('${{ steps.parse.outputs.title }}') newRec.title = '${{ steps.parse.outputs.title }}';
+            if ('${{ steps.parse.outputs.company }}') newRec.company = '${{ steps.parse.outputs.company }}';
+            if ('${{ steps.parse.outputs.relationship }}') newRec.relationship = '${{ steps.parse.outputs.relationship }}';
+            if ('${{ steps.parse.outputs.githubUsername }}') newRec.githubUsername = '${{ steps.parse.outputs.githubUsername }}';
+            if (process.env.PHOTO_FILENAME) newRec.photo = process.env.PHOTO_FILENAME;
+
+            const skills = JSON.parse('${{ steps.parse.outputs.skills }}');
+            if (skills.length > 0) newRec.skillRecommendations = skills;
+
+            // Add to array
+            current.push(newRec);
+
+            // Write back
+            fs.writeFileSync(path, JSON.stringify(current, null, 2) + '\n');
+
+      - name: Commit changes
+        run: |
+          git add public/data/recommendations.json
+          if [ -n "${PHOTO_FILENAME}" ]; then
+            git add "public/images/recommendations/${PHOTO_FILENAME}"
+          fi
+          git commit -m "Add recommendation from ${{ steps.parse.outputs.name }}
+
+          Recommendation approved from issue #${{ steps.parse.outputs.issueNumber }}
+
+          This PR was automatically generated from a recommendation submission."
+
+      - name: Push branch
+        run: git push origin ${{ steps.branch.outputs.name }}
+
+      - name: Create Pull Request
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Add recommendation from ${{ steps.parse.outputs.name }}`,
+              head: '${{ steps.branch.outputs.name }}',
+              base: 'main',
+              body: `## Approved Recommendation
+
+            This PR was automatically created from issue #${{ steps.parse.outputs.issueNumber }}.
+
+            **From:** ${{ steps.parse.outputs.name }}
+            ${('${{ steps.parse.outputs.title }}' || '${{ steps.parse.outputs.company }}') ? `**Position:** ${['${{ steps.parse.outputs.title }}', '${{ steps.parse.outputs.company }}'].filter(Boolean).join(' at ')}` : ''}
+            ${'${{ steps.parse.outputs.relationship }}' ? `**Relationship:** ${{ steps.parse.outputs.relationship }}` : ''}
+            ${'${{ steps.parse.outputs.githubUsername }}' ? `**GitHub:** @${{ steps.parse.outputs.githubUsername }}` : ''}
+
+            ### Testimonial
+            > ${{ steps.parse.outputs.testimonial }}
+
+            ---
+
+            Closes #${{ steps.parse.outputs.issueNumber }}`
+            });
+
+            // Comment on the issue with the PR link
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.parse.outputs.issueNumber }},
+              body: `✅ Recommendation approved! Pull request created: #${pr.number}`
+            });
+
+            // Close the issue
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.parse.outputs.issueNumber }},
+              state: 'closed'
+            });

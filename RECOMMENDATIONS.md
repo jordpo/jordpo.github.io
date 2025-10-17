@@ -1,6 +1,6 @@
 # Recommendations Feature
 
-This portfolio includes a recommendations system that allows visitors to submit professional recommendations, which are reviewed via GitHub Pull Requests before appearing on the site.
+This portfolio includes a recommendations system that allows visitors to submit professional recommendations via GitHub Issues, which are reviewed and approved before appearing on the site.
 
 ## How It Works
 
@@ -18,30 +18,33 @@ This portfolio includes a recommendations system that allows visitors to submit 
    - Profile photo (optional, max 1MB)
 
 4. Click "Submit Recommendation"
-5. Your browser will:
-   - Copy the recommendation details to your clipboard
-   - Open a new tab to the GitHub Actions workflow page
-
-6. On the GitHub Actions page:
-   - Click "Run workflow"
-   - Fill in the form fields with your information (paste from clipboard)
-   - Click "Run workflow" again
-   - A Pull Request will be created automatically
+5. A GitHub issue will be automatically created with your recommendation
+6. **No GitHub account required!** The issue is created via the public API
+7. You can optionally track the status via the issue link that opens
 
 ### For Portfolio Owner (Jordan)
 
 When someone submits a recommendation:
 
-1. You'll receive a GitHub notification about the new PR
-2. Review the PR which will contain:
-   - Updated `public/data/recommendations.json` with the new recommendation
-   - The recommender's photo in `public/images/recommendations/` (if provided)
-3. Review the content and decide:
-   - Merge to approve and publish the recommendation
-   - Request changes if needed
-   - Close without merging to decline
+1. **You'll receive a GitHub notification** about the new issue labeled "recommendation"
+2. **Review the issue** containing:
+   - All recommendation details (name, title, company, relationship, skills, testimonial)
+   - Photo data (if provided) in a collapsible section
+3. **To approve:**
+   - Comment `/approve` on the issue
+   - A GitHub Action automatically:
+     - Creates a new branch
+     - Extracts data from the issue
+     - Downloads and saves the photo (if provided)
+     - Updates `recommendations.json`
+     - Creates a Pull Request
+     - Closes the issue
+4. **Review and merge the PR** to publish the recommendation
+5. **To decline:**
+   - Simply close the issue without commenting `/approve`
+   - Optionally add a comment explaining why
 
-Once merged, the recommendation automatically appears on your portfolio on the next deployment.
+Once the PR is merged, the recommendation automatically appears on your portfolio on the next deployment.
 
 ## File Structure
 
@@ -84,15 +87,34 @@ interface Recommendation {
 
 ## GitHub Actions Workflow
 
-The workflow ([.github/workflows/create-recommendation-pr.yml](.github/workflows/create-recommendation-pr.yml)) is triggered manually via `workflow_dispatch` and:
+The workflow ([.github/workflows/recommendation-issue-to-pr.yml](.github/workflows/recommendation-issue-to-pr.yml)) is triggered when you comment `/approve` on a recommendation issue:
 
-1. Creates a new branch named `recommendation/{sanitized-name}-{timestamp}`
-2. Processes the photo (if provided):
+**Trigger Conditions:**
+- Issue has the label "recommendation"
+- Comment contains `/approve`
+- Comment is from the repository owner (you)
+
+**Workflow Steps:**
+1. Parses the issue body to extract all recommendation data
+2. Creates a new branch named `recommendation/{sanitized-name}-{timestamp}`
+3. Processes the photo (if provided):
    - Decodes from base64
    - Saves to `public/images/recommendations/` with sanitized filename
-3. Updates `recommendations.json` with the new entry
-4. Commits changes
-5. Creates a Pull Request with a formatted body
+4. Updates `recommendations.json` with the new entry
+5. Commits changes
+6. Creates a Pull Request with a formatted body
+7. Comments on the issue with the PR link
+8. Closes the issue
+
+## Benefits of the Issue-Based Approach
+
+✅ **No GitHub account required** - Visitors can submit via public API
+✅ **Built-in moderation** - You approve with a simple `/approve` comment
+✅ **Full visibility** - All submissions are tracked as issues
+✅ **Easy management** - Close spam/invalid submissions without approval
+✅ **Automatic PR creation** - Approved recommendations become PRs automatically
+✅ **Zero cost** - Everything runs on GitHub's free tier
+✅ **Transparent process** - Submitters can track their recommendation status
 
 ## Customization
 
@@ -120,7 +142,7 @@ The components use Tailwind CSS classes matching your portfolio theme. Key custo
 - **Format**: Any image format (jpg, png, gif, etc.)
 - **Size limit**: 1MB
 - **Dimensions**: Auto-scaled to 64px circle in display
-- **Storage**: Base64 encoded in workflow input, decoded to file
+- **Storage**: Base64 encoded in issue, decoded to file by workflow
 
 ## Future Enhancements
 
