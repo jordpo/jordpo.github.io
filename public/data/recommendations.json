@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "name": "Sarah Johnson",
+    "testimonial": "I had the pleasure of working with Jordan on several high-impact projects, and I can confidently say they are one of the most talented engineers I've collaborated with. Their expertise in frontend architecture and TypeScript is exceptional, and they have a remarkable ability to break down complex problems into elegant solutions. Jordan is also an excellent mentor who takes the time to help team members grow. Any organization would be fortunate to have Jordan on their team.",
+    "date": "2025-10-17",
+    "title": "Senior Software Engineer",
+    "company": "Tech Solutions Inc",
+    "relationship": "Former Colleague",
+    "githubUsername": "sjohnson",
+    "photo": "sarah-johnson-1760734067.jpg",
+    "skillRecommendations": [
+      "TypeScript",
+      "React",
+      "Frontend Architecture",
+      "Mentorship",
+      "Technical Leadership"
+    ]
+  }
+]
