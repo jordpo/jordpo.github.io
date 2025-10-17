@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "name": "bb",
+    "testimonial": "aiodfjakjasd",
+    "date": "2025-10-17",
+    "title": "bb",
+    "company": "bb",
+    "relationship": "bb",
+    "githubUsername": "bb",
+    "skillRecommendations": [
+      "TypeScript",
+      "React",
+      "Performance Optimization"
+    ]
+  }
+]
