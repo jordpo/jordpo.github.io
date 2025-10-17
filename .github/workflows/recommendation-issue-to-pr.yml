@@ -140,6 +140,9 @@ jobs:
       - name: Process photo if provided
         if: steps.parse.outputs.photoUrl != ''
         run: |
+          echo "Photo URL from outputs: ${{ steps.parse.outputs.photoUrl }}"
+          echo "Photo filename from outputs: ${{ steps.parse.outputs.photoFileName }}"
+
           FILENAME="${{ steps.parse.outputs.photoFileName }}"
           if [ -n "$FILENAME" ]; then
             EXTENSION="${FILENAME##*.}"
@@ -150,10 +153,19 @@ jobs:
           SANITIZED_NAME=$(echo "${{ steps.parse.outputs.name }}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
           PHOTO_FILENAME="${SANITIZED_NAME}-${{ steps.timestamp.outputs.timestamp }}.${EXTENSION}"
 
+          echo "Saving photo as: ${PHOTO_FILENAME}"
           echo "PHOTO_FILENAME=${PHOTO_FILENAME}" >> $GITHUB_ENV
 
           # Download photo from GitHub Release URL
+          echo "Downloading from: ${{ steps.parse.outputs.photoUrl }}"
           curl -L "${{ steps.parse.outputs.photoUrl }}" -o "public/images/recommendations/${PHOTO_FILENAME}"
+
+          if [ -f "public/images/recommendations/${PHOTO_FILENAME}" ]; then
+            echo "Photo downloaded successfully"
+            ls -lh "public/images/recommendations/${PHOTO_FILENAME}"
+          else
+            echo "ERROR: Photo download failed"
+          fi
 
       - name: Update recommendations.json
         uses: actions/github-script@v7
