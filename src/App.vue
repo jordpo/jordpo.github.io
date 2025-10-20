@@ -56,6 +56,17 @@
             >
               Get in Touch
             </a>
+            <button
+              @click="openChat"
+              class="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg font-medium
+                     hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg
+                     flex items-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              Chat with Me
+            </button>
             <a
               href="/Jordan Morano Resume.pdf"
               download
@@ -267,7 +278,7 @@
     />
 
     <!-- AI Chat Widget -->
-    <ChatWidget />
+    <ChatWidget ref="chatWidgetRef" />
   </div>
 </template>
 
@@ -281,6 +292,11 @@ import RecommendationForm from './components/RecommendationForm.vue'
 import ChatWidget from './components/ChatWidget.vue'
 
 const showRecommendationForm = ref(false)
+const chatWidgetRef = ref<InstanceType<typeof ChatWidget> | null>(null)
+
+const openChat = () => {
+  chatWidgetRef.value?.openChat()
+}
 
 interface Achievement {
   title: string

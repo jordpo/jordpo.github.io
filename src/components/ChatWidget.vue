@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, watch } from 'vue';
+import { ref, nextTick, watch, defineExpose } from 'vue';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -83,6 +83,15 @@ interface Message {
 }
 
 const isOpen = ref(false);
+
+// Expose the toggleChat function so parent can call it
+defineExpose({
+  openChat: () => {
+    if (!isOpen.value) {
+      toggleChat();
+    }
+  }
+});
 const currentMessage = ref('');
 const messages = ref<Message[]>([
   {
