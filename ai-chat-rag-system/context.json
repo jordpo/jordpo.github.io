@@ -167,7 +167,19 @@
       ],
       "currently_seeking": "New full-time role to continue growing skillset with deep collaboration",
       "consulting_interest": "Smaller projects to moonlight - love bringing ideas to life",
-      "advisory_interest": "Lots of software and entrepreneurial industry experience to share"
+      "advisory_interest": "Lots of software and entrepreneurial industry experience to share",
+      "consultancy": {
+        "name": "Turnstone Tech Software",
+        "services": [
+          "Frontend architecture consulting",
+          "Distributed systems design",
+          "Technical leadership advisory",
+          "Team mentorship and engineering practices",
+          "TypeScript adoption guidance",
+          "Performance optimization"
+        ],
+        "contact_email": "info@turnstonetechsoftware.com"
+      }
     },
     "previous_experience": [
       {
@@ -259,11 +271,16 @@
     ]
   },
   "contact": {
-    "email": "jordan.morano@gmail.com",
+    "personal_email": "jordan.morano@gmail.com",
+    "consultancy_email": "info@turnstonetechsoftware.com",
     "github": "https://github.com/jordpo",
     "website": "https://turnstonetechsoftware.com",
     "location": "Burlington area, Vermont, USA",
-    "availability_note": "Open to full-time roles, consulting projects, advisory roles, and speaking opportunities"
+    "availability_note": "Open to full-time roles, consulting projects, advisory roles, and speaking opportunities",
+    "email_usage": {
+      "personal": "jordan.morano@gmail.com - For general profile info, job applications, and personal inquiries",
+      "consultancy": "info@turnstonetechsoftware.com - For consulting and advisory service requests via Turnstone Tech Software"
+    }
   },
   "expertise_topics": [
     "Frontend architecture and performance",

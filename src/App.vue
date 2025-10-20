@@ -9,6 +9,7 @@
           <!-- Desktop Navigation -->
           <div class="hidden md:flex gap-6">
             <a href="#about" class="nav-link">About</a>
+            <a href="#consultancy" class="nav-link">Consultancy</a>
             <a href="#recommendations" class="nav-link">Recommendations</a>
             <a href="#contact" class="nav-link">Contact</a>
           </div>
@@ -34,6 +35,7 @@
           class="md:hidden mt-4 pt-4 border-t border-gray-200 flex flex-col gap-3"
         >
           <a href="#about" class="nav-link" @click="mobileMenuOpen = false">About</a>
+          <a href="#consultancy" class="nav-link" @click="mobileMenuOpen = false">Consultancy</a>
           <a href="#recommendations" class="nav-link" @click="mobileMenuOpen = false">Recommendations</a>
           <a href="#contact" class="nav-link" @click="mobileMenuOpen = false">Contact</a>
         </div>
@@ -217,6 +219,34 @@
               </p>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Consultancy Section -->
+    <section id="consultancy" class="py-16 bg-gradient-to-br from-indigo-50 to-purple-50">
+      <div class="max-w-5xl mx-auto px-6">
+        <div class="max-w-3xl mx-auto text-center">
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl mb-6">
+            <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Turnstone Tech Software</h2>
+          <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+            Need expert guidance on frontend architecture, distributed systems, or technical leadership?
+            I offer consulting and advisory services for teams looking to level up their engineering practices.
+          </p>
+          <a
+            href="mailto:info@turnstonetechsoftware.com"
+            class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold text-lg
+                   hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            Get in Touch
+          </a>
         </div>
       </div>
     </section>
