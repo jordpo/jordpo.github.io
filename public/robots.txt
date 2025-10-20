@@ -1,0 +1,22 @@
+# robots.txt for turnstonetechsoftware.com
+# Optimized for AI agents and search engines
+
+User-agent: *
+Allow: /
+
+# AI-specific resources
+# These files are specifically designed for AI agents to parse
+Allow: /ai-profile.json
+Allow: /ai-readme.md
+Allow: /ai-instructions.md
+
+# Encourage indexing of key resources
+Allow: /profile.jpg
+Allow: /Jordan Morano Resume.pdf
+
+# Sitemap
+Sitemap: https://turnstonetechsoftware.com/sitemap.xml
+
+# Crawl-delay (optional - be nice to servers)
+# Most modern crawlers ignore this, but some respect it
+Crawl-delay: 1
