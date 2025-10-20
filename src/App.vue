@@ -265,6 +265,9 @@
       :isOpen="showRecommendationForm"
       @close="showRecommendationForm = false"
     />
+
+    <!-- AI Chat Widget -->
+    <ChatWidget />
   </div>
 </template>
 
@@ -275,6 +278,7 @@ import ExperienceCard from './components/ExperienceCard.vue'
 import ProjectShowcase from './components/ProjectShowcase.vue'
 import RecommendationsSection from './components/RecommendationsSection.vue'
 import RecommendationForm from './components/RecommendationForm.vue'
+import ChatWidget from './components/ChatWidget.vue'
 
 const showRecommendationForm = ref(false)
 

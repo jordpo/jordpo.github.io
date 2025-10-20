@@ -1,0 +1,285 @@
+{
+  "professional": {
+    "current_role": {
+      "title": "Staff Software Engineer (Front End Lead)",
+      "company": "PowerAuctions LLC",
+      "location": "Vermont (remote)",
+      "tenure": "July 2022 - Present",
+      "focus": "Leading frontend teams, distributed systems architecture, AI-enhanced engineering",
+      "team_size": "4 developers (ranging from junior to 10+ years experience)",
+      "responsibilities": [
+        "Managing small but diverse frontend team",
+        "Key architecture decisions and platform-wide roadmap planning",
+        "Involved in critical business decisions",
+        "Reducing tech debt and upgrading build/runtime systems",
+        "Leading internal tool development for feature flags and translations"
+      ],
+      "current_excitement": [
+        "Managing the frontend team and watching them grow",
+        "Working across domains on the configurator (feature flags & translations tool)",
+        "Reducing tech debt through major version upgrades (TypeScript, build tools)",
+        "Integrating AI-augmented workflows into daily practice",
+        "Cutting out boilerplate work to focus on important architecture decisions"
+      ]
+    },
+    "experience_summary": {
+      "years": "10+",
+      "domains": [
+        "High-stakes auction platforms ($40B+ in transactions)",
+        "Cloud-native distributed systems",
+        "Real-time messaging infrastructure",
+        "Configuration management platforms",
+        "Performance optimization"
+      ],
+      "leadership": [
+        "Frontend team lead (4 developers)",
+        "Technical direction across 10+ concurrent projects",
+        "Weekly 1:1s with junior engineers",
+        "Mentoring engineers across the stack",
+        "AI-augmented development workflows champion"
+      ]
+    },
+    "technical_expertise": {
+      "languages": {
+        "expert": ["TypeScript", "JavaScript (ESNext)", "Ruby", "Elixir"],
+        "proficient": ["Python", "SQL"]
+      },
+      "frontend": {
+        "frameworks": ["React", "Next.js", "Ember.js", "Vue"],
+        "specialties": ["Performance optimization", "Core Web Vitals", "TypeScript migration", "Component architecture"],
+        "build_tools": ["Vite (favorite for local dev)", "Webpack", "TurboRepo"]
+      },
+      "backend": {
+        "frameworks": ["Ruby on Rails", "Elixir/Phoenix", "Node.js"],
+        "specialties": ["REST APIs", "WebSockets", "Microservices", "Distributed systems"],
+        "phoenix_notes": "Functional programming paradigm is intuitive - love piping and data transformations"
+      },
+      "infrastructure": {
+        "cloud": ["AWS"],
+        "tools": ["Docker", "PostgreSQL", "Redis", "GitLab CI", "CircleCI"],
+        "practices": ["CI/CD", "Infrastructure as Code", "Monitoring"]
+      },
+      "ai_tooling": {
+        "apis": ["OpenAI", "Anthropic"],
+        "applications": ["Custom MCP servers", "AI-augmented code review", "Automated documentation"],
+        "impact": "Cuts out boilerplate/busy work to focus on architecture decisions",
+        "philosophy": "Ramping up open source contributions with AI assistance"
+      },
+      "opinions": {
+        "loves": [
+          "TypeScript - very solid, great type safety",
+          "Vite - fast and great for local development",
+          "Elixir/Phoenix - functional paradigm is intuitive",
+          "Component-based architecture - converged ecosystem makes switching frameworks easier"
+        ],
+        "open_to": "New technologies - very open-minded about trying new things",
+        "wishlist": "Frameworks that allow mixing multiple frontend libraries in one app",
+        "common_mistakes": [
+          "Over-complication and over-engineering",
+          "Spending too much time on tests/mocking vs actual development",
+          "Trying to accommodate all cases equally when cost/benefit diminishes"
+        ]
+      }
+    },
+    "work_style": {
+      "daily_routine": {
+        "morning": "Most productive with code in the morning - start early reviewing MRs or planning",
+        "meetings": "Prefer bundled meetings with at least 2 hours of focus time",
+        "end_of_day": "Review work done, plan for next day"
+      },
+      "mentoring_approach": {
+        "frequency": "Weekly check-ins on feelings and blockers",
+        "feedback_style": "Detailed feedback on work, guide through problem-solving",
+        "teaching": "Share best practices and reasoning behind code decisions"
+      },
+      "remote_work_tips": {
+        "environment": "Dedicated office space, noise machine, shut door for focus",
+        "boundaries": "Set start/end times, shut down computer at end of day",
+        "focus": "Listen to music matching mood, minimize interruptions when possible",
+        "philosophy": "Allow interruptions but protect focus time"
+      },
+      "code_review_philosophy": {
+        "ideal": "Equal positive and negative feedback in comments",
+        "mindset": "MR/PR makes contribution shared - code becomes co-owned after merge",
+        "style": "Both praise and constructive criticism"
+      },
+      "communication_style": {
+        "traits": ["Friendly", "Direct", "Honest"],
+        "animated_topics": ["Technology", "Life philosophy"],
+        "listening": "Active listener"
+      }
+    },
+    "key_projects": [
+      {
+        "name": "Configurator Platform",
+        "description": "Internal tool for managing feature flags and translations across projects",
+        "tech": ["Elixir Phoenix", "LiveView", "S3", "Ruby on Rails"],
+        "impact": "Cut developer iteration time by 50%, reduced production incidents by 75%",
+        "team_growth": "More team members developing on it vs just myself initially",
+        "pride": "Continues to add significant value, cross-domain work I really enjoy"
+      },
+      {
+        "name": "Snapshot Microservice",
+        "description": "Distributed microservice for capturing and rendering user-action snapshots at scale",
+        "tech": ["Node.js", "DOM serialization", "Distributed rendering"],
+        "impact": "Processes 1M+ screenshots during high-value auctions"
+      },
+      {
+        "name": "Frontend System Architecture",
+        "description": "Scoped asset delivery system with monorepo architecture",
+        "tech": ["JavaScript", "TurboRepo", "Asset pipeline optimization"],
+        "impact": "Unified user experience across products, optimized loading performance"
+      },
+      {
+        "name": "TypeScript & Build Modernization",
+        "description": "Major version upgrades across core systems",
+        "impact": "Significant accomplishment - modern conventions and type safety",
+        "pride": "Always feels great updating systems across major versions"
+      }
+    ],
+    "achievements": [
+      "100% uptime on 10+ auction platforms valued at $40B+",
+      "Reduced system latency by 500ms",
+      "Improved scalability by 20%",
+      "Cut release bottlenecks by 50%",
+      "Reduced first-paint latency by seconds"
+    ],
+    "career_advice": {
+      "breaking_into_tech": "Be persistent, fake it till you make it. Move forward with insatiable curiosity and skepticism. Learn by doing!",
+      "switching_domains": "Just give it a shot. Use AI to help bridge the language barrier between backend/frontend.",
+      "leadership_development": "Learn by doing and applying yourself. Background in finance and video games helped - persistence and adaptability.",
+      "philosophy": "Don't be afraid to take things apart to understand them"
+    },
+    "side_projects": {
+      "current": "Ramping up open source contributions after busy period with family/home",
+      "past": "Created scoped libraries to address gaps in functionality",
+      "future_goal": "Contribute more with AI augmentation, especially in climate science",
+      "consulting": "Not currently, but interested in smaller moonlight projects",
+      "passion": "Love bringing ideas to life in software"
+    },
+    "availability": {
+      "open_to": [
+        "Full-time roles with growth opportunities and deep collaboration",
+        "Smaller consultancy projects for moonlighting",
+        "Advisory roles leveraging software and business experience",
+        "Speaking at meetups/conferences (limited public speaking experience but comfortable and animated)",
+        "Open source contributions"
+      ],
+      "currently_seeking": "New full-time role to continue growing skillset with deep collaboration",
+      "consulting_interest": "Smaller projects to moonlight - love bringing ideas to life",
+      "advisory_interest": "Lots of software and entrepreneurial industry experience to share"
+    },
+    "previous_experience": [
+      {
+        "company": "Envoy",
+        "role": "Senior Software Engineer",
+        "period": "2021",
+        "focus": "Workplace management platform, Ember.js"
+      },
+      {
+        "company": "IcarusWorks LLC",
+        "role": "Co-founder / Senior Software Engineer",
+        "period": "2016-2020",
+        "focus": "Full-stack consulting, client solutions"
+      },
+      {
+        "company": "Agilion",
+        "role": "Software Developer",
+        "period": "2014-2016",
+        "focus": "REST APIs, responsive UI, JavaScript performance"
+      },
+      {
+        "company": "Ospraie Management / Capital Fund Management",
+        "role": "Operations Associate/Analyst",
+        "period": "2005-2009",
+        "focus": "Hedge fund operations, process automation"
+      }
+    ],
+    "education": [
+      {
+        "institution": "General Assembly",
+        "degree": "Web Development Immersive",
+        "year": "2014",
+        "context": "Career transition from finance to tech"
+      },
+      {
+        "institution": "University of Connecticut",
+        "degree": "B.S. Business Administration (Finance)",
+        "year": "2005"
+      }
+    ]
+  },
+  "personal": {
+    "location": "Burlington area, Vermont",
+    "interests": [
+      "Parenting and family adventures",
+      "Hiking Vermont trails (Camel's Hump, Mt Mansfield, Hunger Mountain, Mt Abraham)",
+      "Running",
+      "Nintendo games (Zelda franchise favorite, currently Mario Kart World and Donkey Kong Bananza)",
+      "Reading",
+      "Coffee shops",
+      "Farmer markets (warmer months)",
+      "Swimming holes"
+    ],
+    "typical_weekend": {
+      "outdoor": "Hikes, walks, running, swimming holes in summer",
+      "family": "Farmer markets, Church St in Burlington, small Vermont towns",
+      "home": "Gardening, home projects",
+      "solo": "Reading, coffee shops, exploring local events"
+    },
+    "favorite_places": {
+      "hikes": ["Camel's Hump", "Mt Mansfield", "Hunger Mountain", "Mt Abraham", "Smaller local trails"],
+      "towns": ["Burlington (Church St)", "Small Vermont towns for exploration"]
+    },
+    "parenting_balance": {
+      "advantage": "Work from home - available when needed",
+      "philosophy": "Accept parenting needs as daily unknown, allow sweet interruptions",
+      "boundaries": "Setting boundaries ensures productivity at end of day"
+    },
+    "background": [
+      "Co-founded Morano Gelato with sister in 2010 after living in Paris for 2 years",
+      "Sister apprenticed with Sicilian gelato chef in Florence, Italy",
+      "Started business during cross-country road trip, between finance and development careers",
+      "Supported sister's passion - her excitement was contagious",
+      "Learned persistence and tenacity overcoming catch-22 hurdles (like needing 5yr history for bank funding)",
+      "Memorable last day: squeezed 50 lemons with cuts on fingers, chocolate base explosion",
+      "Realized he enjoyed eating gelato more than making it - didn't share sister's passion for the business",
+      "Grew up around family's restaurant business",
+      "Career transition from finance to tech in 2014",
+      "Remote work advocate"
+    ],
+    "values": [
+      "Continuous learning and insatiable curiosity",
+      "Mentorship and helping others grow",
+      "Open source contribution",
+      "Work-life balance",
+      "Building meaningful products",
+      "Persistence and adaptability",
+      "Active listening"
+    ]
+  },
+  "contact": {
+    "email": "jordan.morano@gmail.com",
+    "github": "https://github.com/jordpo",
+    "website": "https://jordpo.github.io",
+    "location": "Burlington area, Vermont, USA",
+    "availability_note": "Open to full-time roles, consulting projects, advisory roles, and speaking opportunities"
+  },
+  "expertise_topics": [
+    "Frontend architecture and performance",
+    "TypeScript adoption and migration",
+    "Distributed systems design",
+    "Real-time messaging systems",
+    "Auction platform development",
+    "Developer tooling and productivity",
+    "AI-enhanced engineering workflows",
+    "Team leadership and mentorship",
+    "Remote work best practices",
+    "Elixir/Phoenix development",
+    "Ruby on Rails APIs",
+    "React and modern JavaScript",
+    "Code review best practices",
+    "Career transitions (finance to tech)",
+    "Entrepreneurship and business"
+  ]
+}
