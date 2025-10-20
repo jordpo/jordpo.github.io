@@ -37,6 +37,20 @@
         >
           <div class="message-content">{{ message.content }}</div>
         </div>
+
+        <!-- Quick Prompt Buttons (only show before first user message) -->
+        <div v-if="messages.length === 1 && !isTyping" class="quick-prompts">
+          <p class="quick-prompts-label">Quick questions:</p>
+          <button
+            v-for="prompt in quickPrompts"
+            :key="prompt.text"
+            @click="sendQuickPrompt(prompt.text)"
+            class="quick-prompt-btn"
+          >
+            {{ prompt.label }}
+          </button>
+        </div>
+
         <div v-if="isTyping" class="message assistant typing-indicator">
           <div class="message-content">
             <span></span>
@@ -96,12 +110,22 @@ const currentMessage = ref('');
 const messages = ref<Message[]>([
   {
     role: 'assistant',
-    content: "Hey there! I'm Jordan's AI assistant. Feel free to ask me about my technical experience, projects, or career journey!"
+    content: "Hey there! I'm Jordan's AI assistant. Ask me about technical experience, projects, leadership, or life in Vermont!"
   }
 ]);
 const isTyping = ref(false);
 const messagesContainer = ref<HTMLElement | null>(null);
 const inputField = ref<HTMLInputElement | null>(null);
+
+// Quick prompt suggestions
+const quickPrompts = [
+  { label: "Key projects & achievements", text: "What are your most notable projects and achievements?" },
+  { label: "Leadership & team management", text: "Tell me about your leadership and team management experience" },
+  { label: "Technical stack & expertise", text: "What technologies do you work with and what's your expertise?" },
+  { label: "Career journey", text: "Tell me about your career journey from finance to tech" },
+  { label: "Work style & mentoring", text: "What's your work style and approach to mentoring?" },
+  { label: "Life in Vermont", text: "What's it like living and working in Vermont?" }
+];
 
 const toggleChat = () => {
   isOpen.value = !isOpen.value;
@@ -119,6 +143,11 @@ const scrollToBottom = () => {
       messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
     }
   });
+};
+
+const sendQuickPrompt = (promptText: string) => {
+  currentMessage.value = promptText;
+  sendMessage();
 };
 
 const sendMessage = async () => {
@@ -440,5 +469,46 @@ watch(() => messages.value.length, scrollToBottom);
 
 .chat-messages::-webkit-scrollbar-thumb:hover {
   background: #a0aec0;
+}
+
+/* Quick Prompt Buttons */
+.quick-prompts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 4px;
+  animation: fadeIn 0.4s ease-out 0.3s both;
+}
+
+.quick-prompts-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #718096;
+  margin: 0 0 4px 0;
+}
+
+.quick-prompt-btn {
+  padding: 10px 14px;
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  color: #4a5568;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.quick-prompt-btn:hover {
+  border-color: #667eea;
+  background: #f7fafc;
+  color: #667eea;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.1);
+}
+
+.quick-prompt-btn:active {
+  transform: translateY(0);
 }
 </style>

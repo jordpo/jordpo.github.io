@@ -11,9 +11,9 @@ export const API_CONFIG = {
 
   /**
    * Maximum tokens for response
-   * Keep this low (100-150) for chat responses to be concise and encourage back-and-forth
+   * Set higher (300-400) to allow complete, detailed responses about projects and experience
    */
-  maxTokens: 100,
+  maxTokens: 350,
 
   /**
    * Temperature for response generation
