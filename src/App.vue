@@ -9,9 +9,6 @@
           <!-- Desktop Navigation -->
           <div class="hidden md:flex gap-6">
             <a href="#about" class="nav-link">About</a>
-            <a href="#leadership" class="nav-link">Leadership</a>
-            <a href="#experience" class="nav-link">Experience</a>
-            <a href="#projects" class="nav-link">Projects</a>
             <a href="#recommendations" class="nav-link">Recommendations</a>
             <a href="#contact" class="nav-link">Contact</a>
           </div>
@@ -37,9 +34,6 @@
           class="md:hidden mt-4 pt-4 border-t border-gray-200 flex flex-col gap-3"
         >
           <a href="#about" class="nav-link" @click="mobileMenuOpen = false">About</a>
-          <a href="#leadership" class="nav-link" @click="mobileMenuOpen = false">Leadership</a>
-          <a href="#experience" class="nav-link" @click="mobileMenuOpen = false">Experience</a>
-          <a href="#projects" class="nav-link" @click="mobileMenuOpen = false">Projects</a>
           <a href="#recommendations" class="nav-link" @click="mobileMenuOpen = false">Recommendations</a>
           <a href="#contact" class="nav-link" @click="mobileMenuOpen = false">Contact</a>
         </div>
@@ -78,29 +72,29 @@
             Expert in distributed systems, frontend architecture, and performance optimization.
           </p>
           <div class="flex gap-4 pt-6 justify-center md:justify-start flex-wrap">
+            <button
+              @click="openChat"
+              class="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg font-semibold text-lg
+                     hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl
+                     flex items-center gap-3 transform hover:scale-105"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              Ask About My Experience
+            </button>
             <a
               href="mailto:jordan.morano@gmail.com"
               class="px-6 py-3 bg-primary-600 text-white rounded-lg font-medium
-                     hover:bg-primary-700 transition-colors duration-200"
+                     hover:bg-primary-700 transition-colors duration-200 flex items-center"
             >
               Get in Touch
             </a>
-            <button
-              @click="openChat"
-              class="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg font-medium
-                     hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg
-                     flex items-center gap-2"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg>
-              Chat with Me
-            </button>
             <a
               href="/Jordan Morano Resume.pdf"
               download
               class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-medium
-                     hover:bg-gray-200 transition-colors duration-200"
+                     hover:bg-gray-200 transition-colors duration-200 flex items-center"
             >
               Download Resume
             </a>
@@ -153,55 +147,40 @@
       </div>
     </section>
 
-    <!-- Frontend Leadership Section -->
-    <section id="leadership" class="py-16 bg-gradient-to-br from-primary-50 to-white">
+    <!-- Quick Highlights Section -->
+    <section class="py-16 bg-gradient-to-br from-primary-50 to-white">
       <div class="max-w-5xl mx-auto px-6">
-        <h2 class="section-heading">Frontend Leadership</h2>
-        <div class="card border-2 border-primary-200">
-          <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 text-primary-600">
-              <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <h2 class="section-heading">Highlights</h2>
+        <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+          Want to know more? Ask me about my leadership experience, projects, or technical achievements using the chat below!
+        </p>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="card text-center">
+            <div class="flex justify-center mb-3">
+              <svg class="w-10 h-10 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <div class="flex-1">
-              <h3 class="text-xl font-bold text-gray-900 mb-4">
-                Leading Frontend Team & Development Roadmap
-              </h3>
-              <p class="text-gray-700 leading-relaxed mb-4">
-                Lead frontend team and development roadmap, defining technical direction and sprint priorities
-                across 10+ concurrent projects while mentoring engineers in TypeScript, React patterns, and
-                performance optimization.
-              </p>
-              <div class="grid md:grid-cols-2 gap-4 mt-6">
-                <div class="bg-white rounded-lg p-4 shadow-sm">
-                  <h4 class="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                    <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Technical Direction
-                  </h4>
-                  <ul class="space-y-1 text-sm text-gray-700">
-                    <li>• Architecting modern TypeScript/React systems</li>
-                    <li>• Performance & Core Web Vitals optimization</li>
-                    <li>• Frontend system architecture & patterns</li>
-                  </ul>
-                </div>
-                <div class="bg-white rounded-lg p-4 shadow-sm">
-                  <h4 class="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                    <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    Team Development
-                  </h4>
-                  <ul class="space-y-1 text-sm text-gray-700">
-                    <li>• Mentoring engineers across skill levels</li>
-                    <li>• Sprint planning & prioritization</li>
-                    <li>• Code review & best practices</li>
-                  </ul>
-                </div>
-              </div>
+            <h3 class="font-bold text-gray-900 mb-2">Leadership</h3>
+            <p class="text-sm text-gray-600">Leading frontend team across 10+ concurrent projects with mentorship and technical direction</p>
+          </div>
+          <div class="card text-center">
+            <div class="flex justify-center mb-3">
+              <svg class="w-10 h-10 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
             </div>
+            <h3 class="font-bold text-gray-900 mb-2">High-Stakes Systems</h3>
+            <p class="text-sm text-gray-600">$40B+ in auction platforms with 100% uptime and mission-critical reliability</p>
+          </div>
+          <div class="card text-center">
+            <div class="flex justify-center mb-3">
+              <svg class="w-10 h-10 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-2">Modern Stack</h3>
+            <p class="text-sm text-gray-600">TypeScript, React, Elixir/Phoenix, distributed systems, and AI-enhanced workflows</p>
           </div>
         </div>
       </div>
@@ -212,30 +191,6 @@
       <div class="max-w-5xl mx-auto px-6">
         <h2 class="section-heading">Technical Expertise</h2>
         <SkillsFilter />
-      </div>
-    </section>
-
-    <!-- Experience Highlights -->
-    <section id="experience" class="py-16">
-      <div class="max-w-5xl mx-auto px-6">
-        <h2 class="section-heading">Key Achievements</h2>
-        <div class="space-y-4">
-          <ExperienceCard
-            v-for="achievement in achievements"
-            :key="achievement.title"
-            :title="achievement.title"
-            :description="achievement.description"
-            :impact="achievement.impact"
-          />
-        </div>
-      </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="bg-white py-16">
-      <div class="max-w-5xl mx-auto px-6">
-        <h2 class="section-heading">Notable Projects</h2>
-        <ProjectShowcase />
       </div>
     </section>
 
@@ -314,8 +269,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import SkillsFilter from './components/SkillsFilter.vue'
-import ExperienceCard from './components/ExperienceCard.vue'
-import ProjectShowcase from './components/ProjectShowcase.vue'
 import RecommendationsSection from './components/RecommendationsSection.vue'
 import RecommendationForm from './components/RecommendationForm.vue'
 import ChatWidget from './components/ChatWidget.vue'
@@ -327,33 +280,4 @@ const mobileMenuOpen = ref(false)
 const openChat = () => {
   chatWidgetRef.value?.openChat()
 }
-
-interface Achievement {
-  title: string
-  description: string
-  impact: string
-}
-
-const achievements: Achievement[] = [
-  {
-    title: 'High-Stakes Auction Platforms',
-    description: 'Led delivery of 10+ auction platforms valued at $40B+ with zero downtime during live auctions',
-    impact: '100% on-time deployment, 500ms latency reduction'
-  },
-  {
-    title: 'AI-Enhanced Development',
-    description: 'Spearheaded AI adoption initiatives, building custom MCP servers and internal analytics tools',
-    impact: '25% increase in team velocity'
-  },
-  {
-    title: 'Frontend Performance',
-    description: 'Modernized frontend architecture through TypeScript migration and optimization',
-    impact: 'Seconds reduction in first-paint latency, improved Core Web Vitals'
-  },
-  {
-    title: 'Distributed Systems Architecture',
-    description: 'Architected real-time messaging, non-repudiation framework, and configuration management platform',
-    impact: '2M+ user actions tracked monthly, 50% reduction in developer iteration time'
-  }
-]
 </script>
