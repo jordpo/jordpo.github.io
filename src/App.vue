@@ -5,7 +5,9 @@
       <div class="max-w-5xl mx-auto px-6 py-4">
         <div class="flex items-center justify-between">
           <div class="text-lg font-bold text-gray-900">JM</div>
-          <div class="flex gap-6">
+
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex gap-6">
             <a href="#about" class="nav-link">About</a>
             <a href="#leadership" class="nav-link">Leadership</a>
             <a href="#experience" class="nav-link">Experience</a>
@@ -13,6 +15,33 @@
             <a href="#recommendations" class="nav-link">Recommendations</a>
             <a href="#contact" class="nav-link">Contact</a>
           </div>
+
+          <!-- Mobile Menu Button -->
+          <button
+            @click="mobileMenuOpen = !mobileMenuOpen"
+            class="md:hidden text-gray-600 hover:text-gray-900 transition-colors"
+            aria-label="Toggle menu"
+          >
+            <svg v-if="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div
+          v-show="mobileMenuOpen"
+          class="md:hidden mt-4 pt-4 border-t border-gray-200 flex flex-col gap-3"
+        >
+          <a href="#about" class="nav-link" @click="mobileMenuOpen = false">About</a>
+          <a href="#leadership" class="nav-link" @click="mobileMenuOpen = false">Leadership</a>
+          <a href="#experience" class="nav-link" @click="mobileMenuOpen = false">Experience</a>
+          <a href="#projects" class="nav-link" @click="mobileMenuOpen = false">Projects</a>
+          <a href="#recommendations" class="nav-link" @click="mobileMenuOpen = false">Recommendations</a>
+          <a href="#contact" class="nav-link" @click="mobileMenuOpen = false">Contact</a>
         </div>
       </div>
     </nav>
@@ -293,6 +322,7 @@ import ChatWidget from './components/ChatWidget.vue'
 
 const showRecommendationForm = ref(false)
 const chatWidgetRef = ref<InstanceType<typeof ChatWidget> | null>(null)
+const mobileMenuOpen = ref(false)
 
 const openChat = () => {
   chatWidgetRef.value?.openChat()

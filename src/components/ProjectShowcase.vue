@@ -7,14 +7,14 @@
       @click="toggleProject(project.title)"
     >
       <div class="flex items-start justify-between gap-4">
-        <div class="flex-1">
-          <div class="flex items-center gap-3 mb-2">
+        <div class="flex-1 min-w-0">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
             <h3 class="text-xl font-semibold text-gray-900">{{ project.title }}</h3>
-            <div class="flex gap-2">
+            <div class="flex gap-2 flex-wrap">
               <span
                 v-for="tech in project.tech"
                 :key="tech"
-                class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs font-medium"
+                class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs font-medium whitespace-nowrap"
               >
                 {{ tech }}
               </span>
