@@ -6,10 +6,25 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# Force HTTPS redirect
+[[redirects]]
+  from = "http://turnstonetechsoftware.com/*"
+  to = "https://turnstonetechsoftware.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.turnstonetechsoftware.com/*"
+  to = "https://turnstonetechsoftware.com/:splat"
+  status = 301
+  force = true
+
+# SPA fallback (don't force - allows functions to work)
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false
 
 # Security headers
 [[headers]]
