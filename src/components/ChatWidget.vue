@@ -38,25 +38,26 @@
           <div class="message-content">{{ message.content }}</div>
         </div>
 
-        <!-- Quick Prompt Buttons (only show before first user message) -->
-        <div v-if="messages.length === 1 && !isTyping" class="quick-prompts">
-          <p class="quick-prompts-label">Quick questions:</p>
-          <button
-            v-for="prompt in quickPrompts"
-            :key="prompt.text"
-            @click="sendQuickPrompt(prompt.text)"
-            class="quick-prompt-btn"
-          >
-            {{ prompt.label }}
-          </button>
-        </div>
-
         <div v-if="isTyping" class="message assistant typing-indicator">
           <div class="message-content">
             <span></span>
             <span></span>
             <span></span>
           </div>
+        </div>
+      </div>
+
+      <!-- Fixed Prompts Bar (shows initial prompts or follow-ups) -->
+      <div v-if="(messages.length === 1 && !isTyping) || (showFollowUps && messages.length > 1)" class="prompts-bar">
+        <div class="prompts-container">
+          <button
+            v-for="prompt in (messages.length === 1 ? quickPrompts : followUpPrompts)"
+            :key="prompt.text"
+            @click="sendQuickPrompt(prompt.text)"
+            class="prompt-btn"
+          >
+            {{ prompt.label }}
+          </button>
         </div>
       </div>
 
@@ -116,15 +117,27 @@ const messages = ref<Message[]>([
 const isTyping = ref(false);
 const messagesContainer = ref<HTMLElement | null>(null);
 const inputField = ref<HTMLInputElement | null>(null);
+const showFollowUps = ref(false);
+let followUpTimer: NodeJS.Timeout | null = null;
 
-// Quick prompt suggestions
+// Initial quick prompt suggestions
 const quickPrompts = [
-  { label: "Key projects & achievements", text: "What are your most notable projects and achievements?" },
-  { label: "Leadership & team management", text: "Tell me about your leadership and team management experience" },
-  { label: "Technical stack & expertise", text: "What technologies do you work with and what's your expertise?" },
-  { label: "Career journey", text: "Tell me about your career journey from finance to tech" },
-  { label: "Work style & mentoring", text: "What's your work style and approach to mentoring?" },
-  { label: "Life in Vermont", text: "What's it like living and working in Vermont?" }
+  { label: "Tell me about a key project", text: "Tell me about a key project you're working on" },
+  { label: "How do you lead teams?", text: "How do you approach leading teams?" },
+  { label: "What's your main tech stack?", text: "What's your main tech stack?" },
+  { label: "How did you get into tech?", text: "How did you transition from finance to tech?" },
+  { label: "What's your work style?", text: "What's your work style like?" },
+  { label: "Life in Vermont?", text: "What's it like living in Vermont?" }
+];
+
+// Follow-up prompts that appear after AI responses
+const followUpPrompts = [
+  { label: "Tell me more", text: "Tell me more about that" },
+  { label: "Any challenges?", text: "What challenges did you face?" },
+  { label: "What did you learn?", text: "What did you learn from that?" },
+  { label: "Different topic", text: "Let's talk about something else - what are your hobbies?" },
+  { label: "Tech stack details?", text: "Can you go deeper on the tech stack?" },
+  { label: "Working with you", text: "What's it like working with you?" }
 ];
 
 const toggleChat = () => {
@@ -146,12 +159,26 @@ const scrollToBottom = () => {
 };
 
 const sendQuickPrompt = (promptText: string) => {
+  // Clear follow-up prompts when user sends a message
+  showFollowUps.value = false;
+  if (followUpTimer) {
+    clearTimeout(followUpTimer);
+    followUpTimer = null;
+  }
+
   currentMessage.value = promptText;
   sendMessage();
 };
 
 const sendMessage = async () => {
   if (!currentMessage.value.trim() || isTyping.value) return;
+
+  // Hide follow-up prompts when user sends a message
+  showFollowUps.value = false;
+  if (followUpTimer) {
+    clearTimeout(followUpTimer);
+    followUpTimer = null;
+  }
 
   const userMessage = currentMessage.value.trim();
   messages.value.push({
@@ -197,6 +224,15 @@ const sendMessage = async () => {
       // Wait between words (50ms = fast, 80ms = moderate, 120ms = slow)
       await new Promise(resolve => setTimeout(resolve, 60));
     }
+
+    // Show follow-up prompts after a delay (1 second after typing finishes)
+    if (followUpTimer) {
+      clearTimeout(followUpTimer);
+    }
+    followUpTimer = setTimeout(() => {
+      showFollowUps.value = true;
+      scrollToBottom();
+    }, 1000);
   } catch (error) {
     console.error('Chat error:', error);
     isTyping.value = false;
@@ -471,36 +507,52 @@ watch(() => messages.value.length, scrollToBottom);
   background: #a0aec0;
 }
 
-/* Quick Prompt Buttons */
-.quick-prompts {
+/* Fixed Prompts Bar (for both initial and follow-up prompts) */
+.prompts-bar {
+  background: linear-gradient(to top, #ffffff, #f7f9fc);
+  border-top: 1px solid #e2e8f0;
+  padding: 12px 16px;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.prompts-container {
   display: flex;
-  flex-direction: column;
   gap: 8px;
-  padding: 0 4px;
-  animation: fadeIn 0.4s ease-out 0.3s both;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.quick-prompts-label {
-  font-size: 13px;
-  font-weight: 500;
-  color: #718096;
-  margin: 0 0 4px 0;
+.prompts-container::-webkit-scrollbar {
+  display: none;
 }
 
-.quick-prompt-btn {
-  padding: 10px 14px;
+.prompt-btn {
+  padding: 8px 14px;
   background: white;
   border: 1.5px solid #e2e8f0;
-  border-radius: 8px;
+  border-radius: 20px;
   color: #4a5568;
   font-size: 13px;
   cursor: pointer;
-  text-align: left;
+  white-space: nowrap;
   transition: all 0.2s;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
 }
 
-.quick-prompt-btn:hover {
+.prompt-btn:hover {
   border-color: #667eea;
   background: #f7fafc;
   color: #667eea;
@@ -508,7 +560,7 @@ watch(() => messages.value.length, scrollToBottom);
   box-shadow: 0 2px 4px rgba(102, 126, 234, 0.1);
 }
 
-.quick-prompt-btn:active {
+.prompt-btn:active {
   transform: translateY(0);
 }
 </style>

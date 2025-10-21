@@ -11,7 +11,7 @@ export const API_CONFIG = {
 
   /**
    * Maximum tokens for response
-   * Set higher (300-400) to allow complete, detailed responses about projects and experience
+   * Set to 350 to allow complete thoughts without cutting off mid-sentence
    */
   maxTokens: 350,
 
