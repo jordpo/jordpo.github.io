@@ -45,7 +45,8 @@
         "proficient": ["Python", "SQL"]
       },
       "frontend": {
-        "frameworks": ["React", "Next.js", "Ember.js", "Vue"],
+        "frameworks": ["Ember.js/Glimmer (current primary)", "React", "Next.js", "Vue"],
+        "ember_experience": "Currently working professionally with Ember/Glimmer at PowerAuctions - deep expertise in modern Ember patterns, Glimmer components, and Octane conventions",
         "specialties": ["Performance optimization", "Core Web Vitals", "TypeScript migration", "Component architecture"],
         "build_tools": ["Vite (favorite for local dev)", "Webpack", "TurboRepo"]
       },
@@ -68,6 +69,7 @@
       "opinions": {
         "loves": [
           "TypeScript - very solid, great type safety",
+          "Ember.js/Glimmer - convention over configuration, powerful CLI, stable ecosystem",
           "Vite - fast and great for local development",
           "Elixir/Phoenix - functional paradigm is intuitive",
           "Component-based architecture - converged ecosystem makes switching frameworks easier"
@@ -284,6 +286,7 @@
   },
   "expertise_topics": [
     "Frontend architecture and performance",
+    "Ember.js/Glimmer development and best practices",
     "TypeScript adoption and migration",
     "Distributed systems design",
     "Real-time messaging systems",
