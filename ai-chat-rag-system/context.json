@@ -3,41 +3,45 @@
     "current_role": {
       "title": "Staff Software Engineer (Front End Lead)",
       "company": "PowerAuctions LLC",
-      "location": "Vermont (remote)",
-      "tenure": "July 2022 - Present",
+      "location": "Washington, DC (remote from Vermont)",
+      "tenure": "March 2018 - Present (Promoted to Staff Engineer: July 2022)",
+      "tenure_notes": "Brief tenure at Envoy (April 2021 - July 2021)",
       "focus": "Leading frontend teams, distributed systems architecture, AI-enhanced engineering",
       "team_size": "4 developers (ranging from junior to 10+ years experience)",
       "responsibilities": [
-        "Managing small but diverse frontend team",
-        "Key architecture decisions and platform-wide roadmap planning",
-        "Involved in critical business decisions",
-        "Reducing tech debt and upgrading build/runtime systems",
-        "Leading internal tool development for feature flags and translations"
+        "Led frontend architecture modernization across distributed auction platform ecosystem (3 npm packages, 5 Ember applications)",
+        "Architect and maintain critical microservices: Configurator, Screenshot service, and Manage control plane",
+        "Built end-to-end compliance system spanning Web Components, Phoenix WebSockets, and Express/Chromium microservice",
+        "Reduced build times by 60% and improved Core Web Vitals",
+        "Key architecture decisions and platform-wide roadmap planning"
       ],
       "current_excitement": [
         "Managing the frontend team and watching them grow",
-        "Working across domains on the configurator (feature flags & translations tool)",
+        "Working across domains on the configurator (real-time config/translation management)",
         "Reducing tech debt through major version upgrades (TypeScript, build tools)",
         "Integrating AI-augmented workflows into daily practice",
         "Cutting out boilerplate work to focus on important architecture decisions"
       ]
     },
     "experience_summary": {
-      "years": "10+",
+      "years": "11+",
       "domains": [
         "High-stakes auction platforms ($40B+ in transactions)",
         "Cloud-native distributed systems",
         "Real-time messaging infrastructure",
         "Configuration management platforms",
-        "Performance optimization"
+        "Performance optimization",
+        "Regulatory compliance and forensic audit systems"
       ],
       "leadership": [
         "Frontend team lead (4 developers)",
         "Technical direction across 10+ concurrent projects",
         "Weekly 1:1s with junior engineers",
         "Mentoring engineers across the stack",
-        "AI-augmented development workflows champion"
-      ]
+        "AI-augmented development workflows champion",
+        "Drove 50% team velocity improvements through AI tooling"
+      ],
+      "uptime_record": "Delivered mission-critical platforms with 100% uptime"
     },
     "technical_expertise": {
       "languages": {
@@ -45,9 +49,9 @@
         "proficient": ["Python", "SQL"]
       },
       "frontend": {
-        "frameworks": ["Ember.js/Glimmer (current primary)", "React", "Next.js", "Vue"],
+        "frameworks": ["Ember.js/Glimmer (current primary)", "React", "Next.js", "Vue", "Web Components"],
         "ember_experience": "Currently working professionally with Ember/Glimmer at PowerAuctions - deep expertise in modern Ember patterns, Glimmer components, and Octane conventions",
-        "specialties": ["Performance optimization", "Core Web Vitals", "TypeScript migration", "Component architecture"],
+        "specialties": ["Performance optimization", "Core Web Vitals (60% build time reduction)", "TypeScript migration", "Component architecture", "Web Components"],
         "build_tools": ["Vite (favorite for local dev)", "Webpack", "TurboRepo"]
       },
       "backend": {
@@ -56,14 +60,16 @@
         "phoenix_notes": "Functional programming paradigm is intuitive - love piping and data transformations"
       },
       "infrastructure": {
-        "cloud": ["AWS"],
-        "tools": ["Docker", "PostgreSQL", "Redis", "GitLab CI", "CircleCI"],
+        "cloud": ["AWS (S3, various services)"],
+        "tools": ["Docker", "Kubernetes", "PostgreSQL", "Redis", "GitLab CI", "CircleCI", "GitHub Actions"],
+        "monitoring": ["Datadog", "Sentry"],
         "practices": ["CI/CD", "Infrastructure as Code", "Monitoring"]
       },
       "ai_tooling": {
         "apis": ["OpenAI", "Anthropic"],
-        "applications": ["Custom MCP servers", "AI-augmented code review", "Automated documentation"],
-        "impact": "Cuts out boilerplate/busy work to focus on architecture decisions",
+        "applications": ["Custom MCP servers (GitLab, Configurator, Sentry)", "AI-augmented code review", "Automated documentation"],
+        "impact": "19% sustained velocity increase in developer throughput, 50% faster deployments, 800+ merge requests processed",
+        "team_adoption": "10+ developers using tools daily",
         "philosophy": "Ramping up open source contributions with AI assistance"
       },
       "opinions": {
@@ -114,37 +120,93 @@
     "key_projects": [
       {
         "name": "Configurator Platform",
-        "description": "Internal tool for managing feature flags and translations across projects",
-        "tech": ["Elixir Phoenix", "LiveView", "S3", "Ruby on Rails"],
-        "impact": "Cut developer iteration time by 50%, reduced production incidents by 75%",
-        "team_growth": "More team members developing on it vs just myself initially",
+        "role": "Lead Architect & Developer",
+        "period": "2022 - Present",
+        "description": "Real-time configuration and translation management platform with S3-backed live preview for pre-event setup",
+        "tech": ["Elixir/Phoenix LiveView", "AWS S3", "Docker", "RBAC"],
+        "scale": "Manages 85,000+ configuration keys across multiple profiles, 100,000+ configuration changes annually",
+        "impact": {
+          "cycle_time": "75-85% reduction in configuration cycle time (from 1-2 hours to ~15 minutes)",
+          "incidents": "40% reduction in configuration-related incidents",
+          "uptime": "99.9% uptime",
+          "deployment": "Powers 10+ international auction projects (FCC, ACMA, BOEM, Japan)",
+          "users": "Enabled 25+ non-technical users to manage configurations independently"
+        },
+        "technical_achievements": [
+          "Built from ground up using Elixir/Phoenix LiveView, AWS S3, Docker",
+          "Scaled from single-profile editor to multi-tenant configuration engine",
+          "Implemented automated merge request workflow with live previews",
+          "Built RBAC system securing 40+ users across 8 admin roles"
+        ],
         "pride": "Continues to add significant value, cross-domain work I really enjoy"
       },
       {
-        "name": "Snapshot Microservice",
-        "description": "Distributed microservice for capturing and rendering user-action snapshots at scale",
-        "tech": ["Node.js", "DOM serialization", "Distributed rendering"],
-        "impact": "Processes 1M+ screenshots during high-value auctions"
+        "name": "MCP/AI Developer Tooling",
+        "role": "Creator & Lead Developer",
+        "period": "June 2025 - Present",
+        "description": "AI-augmented developer tooling suite with custom MCP servers",
+        "deliverables": [
+          "GitLab MCP - Automated merge request management",
+          "Configurator MCP - AI-assisted configuration management",
+          "Sentry MCP - Intelligent error debugging integration"
+        ],
+        "impact": {
+          "velocity": "19% sustained velocity increase in Configurator throughput",
+          "merge_requests": "800+ merge requests processed post-implementation",
+          "adoption": "10+ developers using tools daily",
+          "deployments": "50% faster deployment workflows"
+        }
       },
       {
-        "name": "Frontend System Architecture",
-        "description": "Scoped asset delivery system with monorepo architecture",
-        "tech": ["JavaScript", "TurboRepo", "Asset pipeline optimization"],
-        "impact": "Unified user experience across products, optimized loading performance"
+        "name": "Snapshot System (Non-Repudiation & Compliance Platform)",
+        "role": "Architect & Maintainer",
+        "period": "2018 - Present",
+        "description": "End-to-end compliance system spanning Web Components, Phoenix WebSockets, and Express/Chromium microservice for forensic audit and regulatory compliance",
+        "tech": ["Web Components", "Phoenix WebSockets", "Express", "Chromium", "Node.js", "DOM serialization"],
+        "scale": {
+          "codebase": "4,600 lines of production code across 100+ files",
+          "action_types": "80+ distinct action types tracked",
+          "integrations": "30+ component integrations throughout platform",
+          "volume": "1M+ interactions captured per auction event with real-time DOM compression"
+        },
+        "business_impact": {
+          "value": "$50-100K+ annual value in dispute resolution efficiency",
+          "time_saved": "20-40 hours/month saved in QA/debugging time",
+          "compliance": "Complete audit trail for regulatory compliance on $40B+ in high-stakes auctions"
+        },
+        "features": [
+          "Captures every user interaction with compressed DOM states",
+          "On-demand screenshot generation (DOM-to-PDF/PNG)",
+          "Enables instant dispute resolution",
+          "7-year production system providing forensic audit capabilities"
+        ]
       },
       {
-        "name": "TypeScript & Build Modernization",
-        "description": "Major version upgrades across core systems",
-        "impact": "Significant accomplishment - modern conventions and type safety",
-        "pride": "Always feels great updating systems across major versions"
+        "name": "Distributed Auction Platform & Architecture",
+        "role": "Lead Frontend Architect",
+        "period": "2018 - Present",
+        "description": "Frontend architecture modernization across distributed auction platform ecosystem",
+        "tech": ["TypeScript", "Ember.js", "TurboRepo", "Vite", "Microservices"],
+        "scope": "3 npm packages, 5 Ember applications, supporting microservices",
+        "impact": {
+          "build_time": "60% reduction in build times",
+          "performance": "Improved Core Web Vitals",
+          "deployment_risks": "Git-like versioning and live preview cut deployment risks 70%"
+        }
       }
     ],
     "achievements": [
       "100% uptime on 10+ auction platforms valued at $40B+",
-      "Reduced system latency by 500ms",
-      "Improved scalability by 20%",
-      "Cut release bottlenecks by 50%",
-      "Reduced first-paint latency by seconds"
+      "Built Configurator platform managing 85,000+ keys with 99.9% uptime",
+      "75-85% reduction in configuration cycle time (1-2 hours to ~15 minutes)",
+      "40% reduction in configuration-related incidents",
+      "60% reduction in build times across distributed platform",
+      "19% sustained velocity increase through AI tooling",
+      "50% faster deployment workflows",
+      "Built compliance system capturing 1M+ interactions per auction",
+      "$50-100K+ annual value in dispute resolution efficiency",
+      "20-40 hours/month saved in QA/debugging time",
+      "Improved Core Web Vitals across frontend ecosystem"
     ],
     "career_advice": {
       "breaking_into_tech": "Be persistent, fake it till you make it. Move forward with insatiable curiosity and skepticism. Learn by doing!",
@@ -187,37 +249,43 @@
       {
         "company": "Envoy",
         "role": "Senior Software Engineer",
-        "period": "2021",
-        "focus": "Workplace management platform, Ember.js"
+        "period": "April 2021 - July 2021",
+        "focus": "Workplace management platform, Ember.js",
+        "note": "Brief tenure between PowerAuctions contracts"
       },
       {
         "company": "IcarusWorks LLC",
         "role": "Co-founder / Senior Software Engineer",
-        "period": "2016-2020",
-        "focus": "Full-stack consulting, client solutions"
+        "period": "January 2016 - March 2020",
+        "focus": "Full-stack consulting (Node.js, Rails, Elixir/Phoenix, React, Ember.js)",
+        "highlight": "Served as lead consultant for PowerAuctions (July 2017 - March 2018), designing core frontend architecture"
       },
       {
         "company": "Agilion",
-        "role": "Software Developer",
-        "period": "2014-2016",
-        "focus": "REST APIs, responsive UI, JavaScript performance"
+        "role": "Junior Software Developer",
+        "period": "April 2014 - January 2016",
+        "focus": "REST APIs, responsive UI components, performance optimization",
+        "achievement": "Advanced from intern to full-time engineer, improved frontend responsiveness by 50%"
       },
       {
-        "company": "Ospraie Management / Capital Fund Management",
-        "role": "Operations Associate/Analyst",
-        "period": "2005-2009",
-        "focus": "Hedge fund operations, process automation"
+        "company": "Hedge Funds (managing $6B+ portfolios)",
+        "role": "Financial Operations Analyst",
+        "period": "2005 - 2009",
+        "focus": "Hedge fund operations, process automation",
+        "note": "Career pivot from finance to software engineering in 2014"
       }
     ],
     "education": [
       {
         "institution": "General Assembly",
-        "degree": "Web Development Immersive",
+        "location": "Boston, MA",
+        "program": "Web Development Immersive",
         "year": "2014",
         "context": "Career transition from finance to tech"
       },
       {
         "institution": "University of Connecticut",
+        "location": "Storrs, CT",
         "degree": "B.S. Business Administration (Finance)",
         "year": "2005"
       }
@@ -285,21 +353,27 @@
     }
   },
   "expertise_topics": [
-    "Frontend architecture and performance",
+    "Frontend architecture and performance optimization",
     "Ember.js/Glimmer development and best practices",
     "TypeScript adoption and migration",
-    "Distributed systems design",
-    "Real-time messaging systems",
-    "Auction platform development",
-    "Developer tooling and productivity",
-    "AI-enhanced engineering workflows",
+    "Distributed systems design and microservices",
+    "Real-time messaging systems (WebSockets)",
+    "High-stakes auction platform development",
+    "Configuration management platforms",
+    "Regulatory compliance and forensic audit systems",
+    "Developer tooling and productivity (MCP servers)",
+    "AI-enhanced engineering workflows (19% velocity improvement)",
     "Team leadership and mentorship",
     "Remote work best practices",
-    "Elixir/Phoenix development",
+    "Elixir/Phoenix LiveView development",
     "Ruby on Rails APIs",
     "React and modern JavaScript",
+    "Web Components architecture",
     "Code review best practices",
     "Career transitions (finance to tech)",
-    "Entrepreneurship and business"
+    "Entrepreneurship and business",
+    "AWS infrastructure (S3, Docker, Kubernetes)",
+    "CI/CD optimization",
+    "Performance monitoring (Datadog, Sentry)"
   ]
 }
