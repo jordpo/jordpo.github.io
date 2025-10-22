@@ -18,9 +18,9 @@ export const API_CONFIG = {
   /**
    * Temperature for response generation
    * 0.0 = deterministic, 1.0 = creative
-   * 0.7 is a good balance for conversational chat
+   * 0.3 provides consistent, professional responses
    */
-  temperature: 0.7,
+  temperature: 0.3,
 
   /**
    * API version to use
