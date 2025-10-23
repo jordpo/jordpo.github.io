@@ -60,18 +60,17 @@
             Jordan Morano
           </h1>
           <p class="text-2xl md:text-3xl text-gray-600 font-light">
-            Staff Software Engineer (Front End Lead)
+            Staff Software Engineer | Full-Stack TypeScript/JavaScript | Distributed Systems
           </p>
           <div class="flex items-center justify-center md:justify-start gap-2 text-gray-500">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span class="text-lg">Burlington Area, Vermont</span>
+            <span class="text-lg">Vermont</span>
           </div>
           <p class="text-lg text-gray-500 max-w-2xl pt-2">
-            Building mission-critical systems that handle billions in transactions.
-            Expert in distributed systems, frontend architecture, and performance optimization.
+            11+ years building high-performance, distributed systems at scale. Delivered mission-critical platforms ($40B+ value) with 99.9% uptime while driving 50% team velocity improvements through AI-augmented tooling and performance optimization.
           </p>
           <div class="flex gap-4 pt-6 justify-center md:justify-start flex-wrap">
             <button
@@ -112,14 +111,15 @@
         <div class="grid md:grid-cols-2 gap-8">
           <div class="space-y-4">
             <p class="text-gray-700 leading-relaxed">
-              I'm a Staff Software Engineer with over 10 years of experience building high-stakes,
-              mission-critical systems. Currently at PowerAuctions, I lead frontend architecture and
-              development for platforms handling $40B+ in auction values with 100% uptime.
+              I'm a Staff Software Engineer with 11+ years of experience building high-performance,
+              distributed systems at scale. Expert in TypeScript/web components and backend architecture,
+              with proven success leading frontend modernization and developer productivity initiatives.
             </p>
             <p class="text-gray-700 leading-relaxed">
-              My background in hedge fund operations at Capital Fund Management and Ospraie Management
-              gives me unique insight into building reliable, high-stakes systems. I'm passionate about
-              performance optimization, distributed systems, and mentoring engineers.
+              Currently at PowerAuctions, I lead frontend architecture for platforms handling $40B+ in
+              regulated transactions with 99.9% uptime. My background as a Financial Operations Analyst
+              at hedge funds managing $6B+ portfolios gives me unique insight into building reliable,
+              high-stakes systems.
             </p>
           </div>
           <div class="space-y-4">
@@ -128,19 +128,19 @@
               <ul class="space-y-2 text-sm text-gray-700">
                 <li class="flex items-start">
                   <span class="text-primary-600 mr-2">▸</span>
-                  <span>Leading TypeScript/React modernization initiatives</span>
+                  <span>Modernizing distributed frontend ecosystem (5 Ember apps, 3 npm packages)</span>
                 </li>
                 <li class="flex items-start">
                   <span class="text-primary-600 mr-2">▸</span>
-                  <span>Building distributed systems handling 2M+ operations monthly</span>
+                  <span>Architecting core auction microservices (Configurator, Screenshot Service, Manage Control Plane)</span>
                 </li>
                 <li class="flex items-start">
                   <span class="text-primary-600 mr-2">▸</span>
-                  <span>Developing AI-enhanced developer tooling (MCP servers)</span>
+                  <span>Leading AI collaboration sessions with MCP-based developer workflows</span>
                 </li>
                 <li class="flex items-start">
                   <span class="text-primary-600 mr-2">▸</span>
-                  <span>Performance optimization and Core Web Vitals improvements</span>
+                  <span>Driving 60% build time reductions and Core Web Vitals improvements</span>
                 </li>
               </ul>
             </div>
@@ -160,11 +160,11 @@
           <div class="card text-center">
             <div class="flex justify-center mb-3">
               <svg class="w-10 h-10 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <h3 class="font-bold text-gray-900 mb-2">Leadership</h3>
-            <p class="text-sm text-gray-600">Leading frontend team across 10+ concurrent projects with mentorship and technical direction</p>
+            <h3 class="font-bold text-gray-900 mb-2">Performance Expert</h3>
+            <p class="text-sm text-gray-600">Cut build times 60%, improved Core Web Vitals, and drove 50% team velocity improvements through AI-augmented tooling</p>
           </div>
           <div class="card text-center">
             <div class="flex justify-center mb-3">
@@ -172,17 +172,17 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
-            <h3 class="font-bold text-gray-900 mb-2">High-Stakes Systems</h3>
-            <p class="text-sm text-gray-600">$40B+ in auction platforms with 100% uptime and mission-critical reliability</p>
+            <h3 class="font-bold text-gray-900 mb-2">Mission-Critical Systems</h3>
+            <p class="text-sm text-gray-600">$40B+ in regulated transactions with 99.9% uptime and comprehensive compliance/non-repudiation</p>
           </div>
           <div class="card text-center">
             <div class="flex justify-center mb-3">
               <svg class="w-10 h-10 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
-            <h3 class="font-bold text-gray-900 mb-2">Modern Stack</h3>
-            <p class="text-sm text-gray-600">TypeScript, React, Elixir/Phoenix, distributed systems, and AI-enhanced workflows</p>
+            <h3 class="font-bold text-gray-900 mb-2">AI & Innovation</h3>
+            <p class="text-sm text-gray-600">Leading internal AI adoption with custom MCP servers, 19% sustained velocity increase, 50% faster deployments</p>
           </div>
         </div>
       </div>
@@ -209,13 +209,13 @@
             </div>
             <div>
               <p class="text-gray-700 leading-relaxed mb-4">
-                When I'm not building software, you'll find me exploring Vermont's beautiful trails with my family,
-                diving into a good book, or challenging myself with a run through the Burlington area. I'm also an
-                avid Nintendo gamer—there's something special about the creativity and polish that goes into those games.
+                When I'm not building software, I'm spending quality time with my family on parenting adventures,
+                exploring Vermont's hiking trails and running routes, enjoying Nintendo games, and diving into
+                AI innovation projects.
               </p>
               <p class="text-gray-700 leading-relaxed">
-                Living in Vermont provides the perfect balance of outdoor adventure and tech community, and I wouldn't
-                have it any other way.
+                Living in Vermont provides the perfect balance of outdoor adventure, family time, and opportunities
+                to work on cutting-edge technology.
               </p>
             </div>
           </div>
