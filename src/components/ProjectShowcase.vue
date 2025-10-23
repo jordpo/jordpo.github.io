@@ -105,56 +105,43 @@ const toggleProject = (title: string) => {
 
 const projects: Project[] = [
   {
-    title: 'Configurator Platform',
-    tech: ['Elixir', 'Phoenix LiveView', 'Ruby on Rails', 'S3'],
-    description: 'Real-time configuration and translation management platform with git-like branching and release management.',
+    title: 'Non-Repudiation & Compliance Platform',
+    tech: ['Web Components', 'Phoenix WebSockets', 'Chromium'],
+    description: 'Real-time audit and evidence system capturing every user interaction with compressed DOM states and batched screenshot generation.',
     features: [
-      'Live-preview configuration changes across multiple auction systems',
-      'Git-like branching, change review, and release management workflows',
-      'Processing 10K+ configuration changes annually',
-      'Real-time collaboration features for product and QA teams',
-      'Comprehensive audit trail and rollback capabilities'
+      'Processes 1M+ snapshots per auction for $40B+ in regulated transactions',
+      'Compressed DOM state capture for every user interaction',
+      'Batched screenshot generation for regulatory evidence',
+      'Verifiable compliance and instant dispute resolution',
+      'Leveraged internally by QA and product teams for test validation'
     ],
-    impact: '50% reduction in developer iteration time, enabling product/QA teams to manage 100% of feature flags and content updates autonomously. Reduced production incidents related to misconfiguration by 75%.'
+    impact: 'Ensures verifiable compliance for $40B+ in regulated transactions with instant dispute resolution capabilities. Provides comprehensive audit trail for all user actions.'
   },
   {
-    title: 'Snapshot Microservice',
-    tech: ['Node.js', 'DOM Serialization', 'Distributed Pipeline'],
-    description: 'Distributed microservice for capturing and rendering user-action snapshots at scale during high-value auctions.',
+    title: 'Configurator Platform & Distributed Architecture',
+    tech: ['TypeScript', 'Elixir/Phoenix', 'Microservices', 'S3'],
+    description: 'Configuration and translation management platform powering all auction configuration with 100K+ changes/year across 85K+ keys.',
     features: [
-      'Processed 1M+ screenshots during high-value auctions',
-      'Horizontal scaling to handle 1K+ concurrent users',
-      'On-demand replay capability for admin and compliance audits',
-      'Optimized DOM serialization for performance',
-      'Integration with distributed rendering pipeline'
+      'S3-backed release pipeline with live staging previews',
+      'Integrated Manage application for release orchestration',
+      'Dynamic S3 file loading via main API',
+      'Git-style versioning for configuration management',
+      'Empowers developers and QA to update keys/values directly'
     ],
-    impact: 'Enabled comprehensive compliance audits and user action tracking for multi-billion dollar auctions with zero performance impact on live auction systems.'
+    impact: 'Reduced configuration-related risk by 70% through git-style versioning. Enables safe testing in production-identical environments with 99.9% uptime.'
   },
   {
-    title: 'Frontend System Architecture',
-    tech: ['TypeScript', 'TurboRepo', 'Asset Pipeline'],
-    description: 'Scoped asset delivery system with monorepo architecture for shared functionality and seamless navigation.',
+    title: 'Developer Productivity Platform',
+    tech: ['TypeScript', 'Custom MCPs', 'GitLab', 'Sentry'],
+    description: 'AI-augmented developer tooling with custom MCP servers for GitLab, Configurator, and Sentry integration.',
     features: [
-      'Optimized JS class loading pre-tree shaking',
-      'Monorepo architecture for shared component libraries',
-      'Scoped asset bundling by user permissions',
-      'Seamless cross-product navigation',
-      'Performance monitoring and Core Web Vitals optimization'
+      '3 custom MCP servers for seamless tool integration',
+      'GitLab integration for merge request processing',
+      'Configurator integration for configuration management',
+      'Sentry integration for error tracking and debugging',
+      'AI-enhanced workflows accelerating development velocity'
     ],
-    impact: 'Unified user experience across multiple products, reduced bundle sizes by 40%, and improved first-paint latency by seconds.'
-  },
-  {
-    title: 'Non-Repudiation Framework',
-    tech: ['Ruby on Rails', 'PostgreSQL', 'Microservices'],
-    description: 'Enterprise-grade user tracking and compliance system across distributed microservices.',
-    features: [
-      'Captures 2M+ user actions monthly',
-      'Distributed event tracking across multiple services',
-      'Cryptographic verification of user actions',
-      'Comprehensive audit trail for compliance',
-      'Real-time analytics and reporting dashboard'
-    ],
-    impact: 'Enabled full compliance with regulatory requirements for high-stakes auctions, providing immutable audit trails for all user interactions.'
+    impact: 'Enabled 10+ developers to process 800+ merge requests with 19% sustained velocity increase and 50% faster deployments.'
   }
 ]
 </script>
