@@ -17,8 +17,16 @@ export async function checkSkills(args: z.infer<typeof checkSkillsSchema>) {
       throw new Error('Failed to fetch skills or experience data');
     }
 
-    const skillsData = await skillsResponse.json();
-    const experienceData = await experienceResponse.json();
+    const skillsData = await skillsResponse.json() as {
+      languages: string[];
+      frameworks: string[];
+      tools: string[];
+      areas: string[];
+    };
+    const experienceData = await experienceResponse.json() as Array<{
+      company: string;
+      technologies: string[];
+    }>;
 
     // Flatten all skills into a searchable list
     const allSkills = [

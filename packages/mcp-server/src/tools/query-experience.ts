@@ -14,7 +14,23 @@ export async function queryExperience(args: z.infer<typeof queryExperienceSchema
       throw new Error(`API request failed: ${response.statusText}`);
     }
 
-    const data = await response.json();
+    const data = await response.json() as {
+      totalResults: number;
+      experiences: Array<{
+        role: string;
+        company: string;
+        startDate: string;
+        endDate: string;
+        technologies: string[];
+      }>;
+      projects: Array<{
+        name: string;
+        category: string;
+        role: string;
+        technologies: string[];
+      }>;
+      skills: string[];
+    };
 
     // Format the response for better readability
     let result = `Search results for "${args.query}":\n\n`;
@@ -22,7 +38,7 @@ export async function queryExperience(args: z.infer<typeof queryExperienceSchema
 
     if (data.experiences.length > 0) {
       result += `## Experience Matches (${data.experiences.length})\n\n`;
-      data.experiences.forEach((exp: any) => {
+      data.experiences.forEach((exp) => {
         result += `**${exp.role}** at ${exp.company}\n`;
         result += `Period: ${exp.startDate} - ${exp.endDate}\n`;
         result += `Technologies: ${exp.technologies.join(', ')}\n\n`;
@@ -31,7 +47,7 @@ export async function queryExperience(args: z.infer<typeof queryExperienceSchema
 
     if (data.projects.length > 0) {
       result += `## Project Matches (${data.projects.length})\n\n`;
-      data.projects.forEach((proj: any) => {
+      data.projects.forEach((proj) => {
         result += `**${proj.name}** (${proj.category})\n`;
         result += `Role: ${proj.role}\n`;
         result += `Technologies: ${proj.technologies.join(', ')}\n\n`;

@@ -22,17 +22,32 @@ export async function getProjects(args: z.infer<typeof getProjectsSchema>) {
       throw new Error(`API request failed: ${response.statusText}`);
     }
 
-    let projects = await response.json();
+    type Project = {
+      name: string;
+      role: string;
+      period: string;
+      category: string;
+      technologies: string[];
+      impact: string;
+      description: string;
+      url?: string;
+      stats?: {
+        stars?: number;
+        language?: string;
+      };
+    };
+
+    let projects = await response.json() as Project[];
 
     // Filter by category
     if (args.category && args.category !== 'all') {
-      projects = projects.filter((p: any) => p.category === args.category);
+      projects = projects.filter((p) => p.category === args.category);
     }
 
     // Filter by technology
     if (args.technology) {
       const techLower = args.technology.toLowerCase();
-      projects = projects.filter((p: any) =>
+      projects = projects.filter((p) =>
         p.technologies.some((tech: string) => tech.toLowerCase().includes(techLower))
       );
     }
@@ -49,7 +64,7 @@ export async function getProjects(args: z.infer<typeof getProjectsSchema>) {
 
     result += `\n\nTotal: ${projects.length} projects\n\n`;
 
-    projects.forEach((project: any) => {
+    projects.forEach((project) => {
       result += `## ${project.name}\n\n`;
       result += `**Role**: ${project.role}\n`;
       result += `**Period**: ${project.period}\n`;
