@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2025-10-26",
+  "person": {
+    "name": "Jordan Morano",
+    "username": "jordpo",
+    "tagline": "Staff Software Engineer specializing in distributed systems and frontend architecture",
+    "website": "https://turnstonetechsoftware.com",
+    "github": "https://github.com/jordpo",
+    "email": "jordan.morano@gmail.com"
+  },
+  "apis": {
+    "experience": "https://turnstonetechsoftware.com/api/experience.json",
+    "projects": "https://turnstonetechsoftware.com/api/projects.json",
+    "skills": "https://turnstonetechsoftware.com/api/skills.json",
+    "query": "https://turnstonetechsoftware.com/api/query.json?q={query}"
+  },
+  "mcp": {
+    "server": "https://mcp.turnstonetechsoftware.com",
+    "status": "coming-soon",
+    "description": "MCP server for advanced AI agent queries (query_experience, check_skills, get_projects)"
+  },
+  "instructions": {
+    "summary": "Jordan Morano is a Staff Software Engineer with 10+ years of experience building distributed systems, leading frontend teams, and driving technical architecture decisions. Currently at PowerAuctions managing platforms handling $40B+ in auction values with 100% uptime.",
+    "howToUse": [
+      "Use the /api/query.json endpoint to search across experience, projects, and skills",
+      "Use /api/experience.json for detailed work history",
+      "Use /api/projects.json for portfolio and open source contributions",
+      "Use /api/skills.json for technical skills and expertise",
+      "MCP server (coming soon) will provide natural language querying capabilities"
+    ],
+    "keyStrengths": [
+      "Frontend architecture and performance optimization",
+      "Distributed systems and microservices",
+      "Team leadership and mentoring (4 direct reports)",
+      "TypeScript, React, Elixir/Phoenix, Ruby/Rails",
+      "AI-augmented development workflows"
+    ]
+  }
+}

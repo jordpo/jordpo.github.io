@@ -1,0 +1,21 @@
+{
+  "name": "@jordpo/site",
+  "version": "3.0.0",
+  "description": "Jordan Morano - AI-First Portfolio Site",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.16.0",
+    "@astrojs/tailwind": "^5.1.2",
+    "tailwindcss": "^3.4.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.0",
+    "typescript": "^5.6.0"
+  }
+}

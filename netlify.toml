@@ -1,7 +1,7 @@
 [build]
+  base = "packages/site"
   command = "npm run build"
   publish = "dist"
-  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "20"
@@ -19,7 +19,7 @@
   status = 301
   force = true
 
-# SPA fallback (don't force - allows functions to work)
+# SPA fallback (don't force - allows API routes to work)
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -40,3 +40,9 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache API responses (1 hour)
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"

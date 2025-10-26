@@ -1,0 +1,46 @@
+{
+  "languages": [
+    "TypeScript",
+    "JavaScript",
+    "Elixir",
+    "Ruby",
+    "Python",
+    "HTML",
+    "CSS",
+    "SQL"
+  ],
+  "frameworks": [
+    "React",
+    "Next.js",
+    "Ember.js",
+    "Vue",
+    "Elixir/Phoenix",
+    "Ruby on Rails",
+    "Node.js"
+  ],
+  "tools": [
+    "Git",
+    "GitHub",
+    "GitLab",
+    "AWS",
+    "Docker",
+    "PostgreSQL",
+    "Redis",
+    "GitLab CI",
+    "CircleCI",
+    "Vite",
+    "Webpack",
+    "TurboRepo"
+  ],
+  "areas": [
+    "Frontend Architecture",
+    "Distributed Systems",
+    "Performance Optimization",
+    "Real-time Messaging",
+    "Microservices",
+    "CI/CD",
+    "Team Leadership",
+    "Code Review",
+    "AI-Enhanced Workflows"
+  ]
+}

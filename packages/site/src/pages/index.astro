@@ -1,0 +1,293 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { promptButtons } from '../lib/prompts';
+---
+
+<Layout
+  title="Jordan Morano - Staff Software Engineer"
+  description="Staff Software Engineer specializing in distributed systems, frontend architecture, and team leadership. Currently leading frontend at PowerAuctions."
+>
+  <main class="container">
+    <div class="card">
+      <img src="/avatar.jpg" alt="Jordan Morano" class="avatar" />
+
+      <h1 class="name">Jordan Morano</h1>
+      <p class="title">Staff Software Engineer</p>
+
+      <div class="instruction">
+        <p class="main-instruction">Ask your AI about me</p>
+        <p class="hint">
+          Open your AI browser's chat <span class="keyboard-hint">(⌘K in Arc)</span> and ask about me
+        </p>
+      </div>
+
+      <div class="prompts-section">
+        <p class="prompts-label">Try these prompts:</p>
+        <div class="prompts-grid">
+          {promptButtons.map((button) => (
+            <button
+              type="button"
+              class="prompt-button"
+              data-copy-text={button.copyText}
+              data-label={button.label}
+            >
+              <span class="prompt-icon">{button.icon}</span>
+              <span class="prompt-label">{button.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <footer class="footer">
+        <a href="/resume.pdf" class="resume-link" target="_blank" rel="noopener noreferrer">
+          Download Resume (PDF)
+        </a>
+      </footer>
+    </div>
+
+    <div id="toast" class="toast">
+      <span id="toast-message"></span>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // Toast notification system
+  function showToast(message: string) {
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+
+    if (!toast || !toastMessage) return;
+
+    toastMessage.textContent = message;
+    toast.classList.add('show');
+
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3000);
+  }
+
+  // Copy to clipboard functionality
+  async function copyToClipboard(text: string): Promise<boolean> {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      return false;
+    }
+  }
+
+  // Add click handlers to prompt buttons
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.prompt-button');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', async () => {
+        const copyText = button.getAttribute('data-copy-text');
+        const label = button.getAttribute('data-label');
+
+        if (!copyText) return;
+
+        const success = await copyToClipboard(copyText);
+
+        if (success) {
+          showToast(`✓ "${label}" copied to clipboard!`);
+        } else {
+          showToast('❌ Failed to copy to clipboard');
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 3rem 2rem;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+
+  .avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 2rem;
+    border: 6px solid #667eea;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+  }
+
+  .name {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 0.5rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+    color: #4a5568;
+    margin-bottom: 2rem;
+    font-weight: 500;
+  }
+
+  .instruction {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .main-instruction {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+
+  .hint {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+  }
+
+  .keyboard-hint {
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Courier New', monospace;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+  }
+
+  .prompts-section {
+    margin-bottom: 2rem;
+  }
+
+  .prompts-label {
+    font-size: 1rem;
+    color: #4a5568;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .prompts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .prompt-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 1rem 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  }
+
+  .prompt-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  }
+
+  .prompt-button:active {
+    transform: translateY(0);
+  }
+
+  .prompt-icon {
+    font-size: 1.5rem;
+  }
+
+  .prompt-label {
+    font-size: 0.875rem;
+    line-height: 1.2;
+  }
+
+  .footer {
+    padding-top: 1.5rem;
+    border-top: 2px solid #e2e8f0;
+  }
+
+  .resume-link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+  }
+
+  .resume-link:hover {
+    color: #764ba2;
+    text-decoration: underline;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #1a202c;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    font-weight: 500;
+    max-width: 90%;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  @media (max-width: 640px) {
+    .card {
+      padding: 2rem 1.5rem;
+    }
+
+    .name {
+      font-size: 2rem;
+    }
+
+    .title {
+      font-size: 1.1rem;
+    }
+
+    .main-instruction {
+      font-size: 1.25rem;
+    }
+
+    .prompts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .avatar {
+      width: 140px;
+      height: 140px;
+    }
+  }
+</style>
