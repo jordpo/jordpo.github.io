@@ -1,0 +1,35 @@
+# fly.toml app configuration file generated for jordan-morano-mcp on 2025-10-26
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+
+app = "jordan-morano-mcp"
+primary_region = "ewr"  # Newark, NJ (closest alternative to Boston)
+
+[build]
+  [build.args]
+    NODE_VERSION = "20"
+
+[env]
+  PORT = "8080"
+  NODE_ENV = "production"
+  MCP_TRANSPORT_MODE = "http"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "requests"
+    hard_limit = 250
+    soft_limit = 200
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
+
+# Dockerfile to be created in the same directory

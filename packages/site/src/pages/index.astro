@@ -1,0 +1,165 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { promptButtons } from '../lib/prompts';
+---
+
+<Layout
+  title="Jordan Morano - Staff Software Engineer"
+  description="Staff Software Engineer specializing in distributed systems, frontend architecture, and team leadership. Currently leading frontend at PowerAuctions."
+>
+  <main class="min-h-screen flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+    <div class="max-w-2xl w-full">
+      <!-- Header Section -->
+      <div class="text-center mb-12">
+        <img
+          src="/avatar.jpg"
+          alt="Jordan Morano"
+          class="w-24 h-24 rounded-full mx-auto mb-6 ring-2 ring-slate-200 object-cover"
+        />
+        <h1 class="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl mb-3">
+          Jordan Morano
+        </h1>
+        <p class="text-lg text-slate-600 mb-2">
+          Staff Software Engineer
+        </p>
+        <p class="text-sm text-slate-500">
+          PowerAuctions · Distributed Systems · Frontend Architecture
+        </p>
+      </div>
+
+      <!-- AI Integration Callout -->
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm mb-8 p-8">
+        <div class="text-center mb-6">
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 mb-4">
+            <svg class="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h2 class="text-2xl font-semibold text-slate-900 mb-2">
+            AI-Powered Portfolio
+          </h2>
+          <p class="text-slate-600 leading-relaxed">
+            Ask your AI assistant about my experience, skills, and projects.<br />
+            Click any prompt below to copy it to your clipboard.
+          </p>
+        </div>
+
+        <!-- Prompt Buttons Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {promptButtons.map((button) => (
+            <button
+              type="button"
+              class="group relative flex flex-col items-center justify-center px-4 py-5 rounded-lg border-2 border-slate-200 bg-white hover:border-emerald-500 hover:bg-emerald-50 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+              data-copy-text={button.copyText}
+              data-label={button.label}
+            >
+              <span class="text-2xl mb-2 group-hover:scale-110 transition-transform duration-200">
+                {button.icon}
+              </span>
+              <span class="text-xs font-medium text-slate-700 text-center group-hover:text-emerald-700">
+                {button.label}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <!-- Helper Text -->
+        <div class="mt-6 pt-6 border-t border-slate-200">
+          <p class="text-xs text-slate-500 text-center">
+            Works with ChatGPT, Claude, Perplexity, Arc, and other AI assistants
+          </p>
+        </div>
+      </div>
+
+      <!-- Footer Links -->
+      <div class="flex items-center justify-center gap-6 text-sm">
+        <a
+          href="/resume.pdf"
+          class="inline-flex items-center text-slate-600 hover:text-slate-900 font-medium transition-colors"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+          Resume (PDF)
+        </a>
+        <span class="text-slate-300">·</span>
+        <a
+          href="mailto:jordan.morano@gmail.com"
+          class="inline-flex items-center text-slate-600 hover:text-slate-900 font-medium transition-colors"
+        >
+          <svg class="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          Email
+        </a>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div
+      id="toast"
+      class="fixed bottom-8 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 transition-all duration-300 z-50"
+    >
+      <div class="bg-slate-900 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2">
+        <svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        <span id="toast-message" class="font-medium"></span>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // Toast notification system
+  function showToast(message: string) {
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+
+    if (!toast || !toastMessage) return;
+
+    toastMessage.textContent = message;
+    toast.classList.remove('opacity-0', 'translate-y-24');
+    toast.classList.add('opacity-100', 'translate-y-0');
+
+    setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', 'translate-y-24');
+    }, 3000);
+  }
+
+  // Copy to clipboard functionality
+  async function copyToClipboard(text: string): Promise<boolean> {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      return false;
+    }
+  }
+
+  // Add click handlers to prompt buttons
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('button[data-copy-text]');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', async () => {
+        const copyText = button.getAttribute('data-copy-text');
+        const label = button.getAttribute('data-label');
+
+        if (!copyText) return;
+
+        const success = await copyToClipboard(copyText);
+
+        if (success) {
+          showToast(`"${label}" copied!`);
+        } else {
+          showToast('Failed to copy');
+        }
+      });
+    });
+  });
+</script>
