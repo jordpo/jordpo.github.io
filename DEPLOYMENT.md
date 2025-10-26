@@ -134,7 +134,11 @@ Key points:
 
 ## MCP Server Deployment (Fly.io)
 
-The MCP server is **optional**. Deploy it if you want AI agents to query your portfolio via MCP tools.
+The MCP server is **optional**. Deploy it if you want AI agents to query your portfolio via MCP tools remotely.
+
+The MCP server supports two modes:
+- **Stdio** (local): For Claude Desktop on your machine
+- **HTTP** (remote): For deployment to Fly.io with remote access
 
 ### Prerequisites
 
@@ -145,7 +149,11 @@ The MCP server is **optional**. Deploy it if you want AI agents to query your po
 
 2. **Install Fly CLI**
    ```bash
+   # macOS/Linux
    curl -L https://fly.io/install.sh | sh
+
+   # Add to PATH (macOS/Linux)
+   export PATH="$HOME/.fly/bin:$PATH"
    ```
 
 3. **Login**
@@ -155,47 +163,67 @@ The MCP server is **optional**. Deploy it if you want AI agents to query your po
 
 ### Initial Deployment
 
-From the mcp-server directory:
+**IMPORTANT:** Run these commands from `packages/mcp-server/`, not from the monorepo root!
 
 ```bash
+# Navigate to MCP server directory
 cd packages/mcp-server
 
-# Launch app (creates fly.toml if it doesn't exist)
-fly launch
-
-# Follow prompts:
-# - App name: jordan-morano-mcp (or your preference)
-# - Region: Choose closest to your target audience
-# - Don't deploy yet: No
-
-# Deploy
+# Deploy (fly.toml already exists with correct config)
 fly deploy
 ```
 
 The deployment will:
 1. Build Docker image from Dockerfile
-2. Push to Fly.io registry
-3. Start VM with your MCP server
-4. Assign URL: https://jordan-morano-mcp.fly.dev
+2. Install dependencies and compile TypeScript
+3. Push to Fly.io registry
+4. Start VM with MCP server in HTTP mode
+5. Assign URL: https://jordan-morano-mcp.fly.dev
+
+**First deployment notes:**
+- If `fly.toml` doesn't exist, run `fly launch` first
+- App name: `jordan-morano-mcp` (or your preference)
+- Region: Choose closest to your target audience (default: bos)
+- The server will automatically run in HTTP mode via `MCP_TRANSPORT_MODE=http` env var
 
 ### Update Deployment
 
 After making changes to the MCP server:
 
 ```bash
+# Navigate to MCP server directory (from monorepo root)
 cd packages/mcp-server
 
-# Build locally to test (optional)
+# Build and test locally first (optional but recommended)
 npm run build
-node dist/index.js
+
+# Test in HTTP mode locally
+MCP_TRANSPORT_MODE=http PORT=8080 node dist/index.js
+# Visit http://localhost:8080/health to verify
 
 # Deploy to Fly.io
 fly deploy
 ```
 
+### Test Deployment
+
+After deploying, verify the server is working:
+
+```bash
+# Health check
+curl https://jordan-morano-mcp.fly.dev/health
+# Expected: {"status":"ok","server":"jordan-morano-portfolio-mcp"}
+
+# Check logs
+fly logs
+
+# Check status
+fly status
+```
+
 ### Configuration
 
-The `fly.toml` is pre-configured for free tier:
+The `fly.toml` is pre-configured for HTTP mode and free tier:
 
 ```toml
 app = "jordan-morano-mcp"
@@ -204,21 +232,23 @@ primary_region = "bos"
 [env]
   PORT = "8080"
   NODE_ENV = "production"
+  MCP_TRANSPORT_MODE = "http"  # ← Enables HTTP mode
 
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = false
+  auto_stop_machines = false    # Always-on, no cold starts
   auto_start_machines = true
-  min_machines_running = 1
+  min_machines_running = 1      # One instance always running
 
 [[vm]]
-  memory = "256mb"
+  memory = "256mb"               # Fits in free tier
   cpu_kind = "shared"
   cpus = 1
 ```
 
 Key points:
+- `MCP_TRANSPORT_MODE = "http"` - Enables HTTP transport (vs stdio)
 - `memory = "256mb"` - Fits in free tier
 - `auto_stop_machines = false` - Always-on, no cold starts
 - `min_machines_running = 1` - One instance always running
@@ -334,15 +364,34 @@ curl "https://turnstonetechsoftware.com/api/query.json?q=typescript"
 
 **Test MCP Server:**
 ```bash
-# Check if server is running
-curl https://jordan-morano-mcp.fly.dev
+# Health check
+curl https://jordan-morano-mcp.fly.dev/health
+# Expected: {"status":"ok","server":"jordan-morano-portfolio-mcp"}
 
-# Use with Claude Desktop (add to config):
+# Or with custom domain (after DNS setup)
+curl https://mcp.turnstonetechsoftware.com/health
+```
+
+**Use with Claude Desktop:**
+
+Local (stdio mode):
+```json
 {
   "mcpServers": {
-    "jordan-morano-portfolio": {
-      "command": "node",
+    "jordan-portfolio-local": {
+      "command": "/Users/yourusername/.asdf/shims/node",
       "args": ["/path/to/packages/mcp-server/dist/index.js"]
+    }
+  }
+}
+```
+
+Remote (HTTP mode - after deployment):
+```json
+{
+  "mcpServers": {
+    "jordan-portfolio-remote": {
+      "url": "https://mcp.turnstonetechsoftware.com/mcp"
     }
   }
 }
