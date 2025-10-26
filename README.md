@@ -377,15 +377,6 @@ curl http://localhost:4321/api/experience.json
 - **Netlify Free Tier:** 100GB bandwidth, 300 build minutes/month
 - **Fly.io Free Tier:** 3 shared-cpu-1x 256MB VMs (using 1)
 
-## Migration from Vue 3
-
-This site was migrated from a Vue 3 SPA. Key changes:
-
-- ❌ Removed: Vue components, Vite, Vitest, Netlify functions, custom chat widget
-- ✅ Added: Astro, content collections, API routes, MCP server, prompt buttons
-- 📦 Migrated: All content from `public/ai-profile.json` to content collections
-- 🎨 Kept: Tailwind config, color scheme, domain (turnstonetechsoftware.com)
-
 ## Documentation
 
 - [DEPLOYMENT.md](./DEPLOYMENT.md) - Detailed deployment instructions
