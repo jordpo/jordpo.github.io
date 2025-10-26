@@ -12,6 +12,7 @@ primary_region = "bos"
 [env]
   PORT = "8080"
   NODE_ENV = "production"
+  MCP_TRANSPORT_MODE = "http"
 
 [http_service]
   internal_port = 8080

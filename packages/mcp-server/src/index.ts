@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamablehttp.js';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -8,6 +9,7 @@ import {
 import { queryExperience, queryExperienceSchema } from './tools/query-experience.js';
 import { checkSkills, checkSkillsSchema } from './tools/check-skills.js';
 import { getProjects, getProjectsSchema } from './tools/get-projects.js';
+import express from 'express';
 
 // Create MCP server
 const server = new Server(
@@ -124,9 +126,49 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
 // Start the server
 async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error('Jordan Morano Portfolio MCP Server running on stdio');
+  const mode = process.env.MCP_TRANSPORT_MODE || 'stdio';
+
+  if (mode === 'http') {
+    // HTTP mode for remote deployment
+    const app = express();
+    const port = parseInt(process.env.PORT || '8080');
+
+    app.use(express.json());
+
+    // Health check endpoint
+    app.get('/health', (_req, res) => {
+      res.json({ status: 'ok', server: 'jordan-morano-portfolio-mcp' });
+    });
+
+    // MCP endpoint
+    app.post('/mcp', async (req, res) => {
+      const transport = new StreamableHTTPServerTransport({
+        sessionIdGenerator: () => crypto.randomUUID(), // Stateless mode
+      });
+
+      await server.connect(transport);
+
+      try {
+        await transport.handleRequest(req, res, req.body);
+      } catch (error) {
+        console.error('Error handling MCP request:', error);
+        if (!res.headersSent) {
+          res.status(500).json({ error: 'Internal server error' });
+        }
+      }
+    });
+
+    app.listen(port, () => {
+      console.log(`Jordan Morano Portfolio MCP Server running on HTTP at http://localhost:${port}`);
+      console.log(`MCP endpoint: http://localhost:${port}/mcp`);
+      console.log(`Health check: http://localhost:${port}/health`);
+    });
+  } else {
+    // Stdio mode for local Claude Desktop
+    const transport = new StdioServerTransport();
+    await server.connect(transport);
+    console.error('Jordan Morano Portfolio MCP Server running on stdio');
+  }
 }
 
 main().catch((error) => {
