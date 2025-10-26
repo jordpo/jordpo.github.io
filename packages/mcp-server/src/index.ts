@@ -140,6 +140,21 @@ async function main() {
       res.json({ status: 'ok', server: 'jordan-morano-portfolio-mcp' });
     });
 
+    // MCP discovery endpoint (/.well-known/mcp)
+    app.get('/.well-known/mcp', (_req, res) => {
+      res.json({
+        mcpServers: {
+          'jordan-morano-portfolio': {
+            transportType: 'http',
+            url: '/mcp',
+            name: 'Jordan Morano Portfolio',
+            version: '1.0.0',
+            description: "Query Jordan Morano's professional experience, skills, and projects",
+          },
+        },
+      });
+    });
+
     // MCP endpoint
     app.post('/mcp', async (req, res) => {
       const transport = new StreamableHTTPServerTransport({
@@ -156,6 +171,15 @@ async function main() {
           res.status(500).json({ error: 'Internal server error' });
         }
       }
+    });
+    
+    app.get("/mcp", (_req, res) => {
+      res.json({
+        status: "ok",
+        name: "jordan-morano-portfolio",
+        version: "1.0.0",
+        message: "MCP endpoint is alive",
+      });
     });
 
     app.listen(port, () => {
